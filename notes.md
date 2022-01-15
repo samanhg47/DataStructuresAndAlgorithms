@@ -5,19 +5,21 @@
 
 <h1 id=bigO>Big-O</h1>
 
- **Link List**
+**Link List**
   ##### &ensp;&ensp; - [Time Testing](#timeTesting)
 
-  &ensp;
-
+&ensp;
 
  *Official Term* - Big-O Asymptotic Analysis
 
  *Use Case* - Denotes how scalable an algorithm is. How much longer does the algorithm take to run as we the data set grows?
 
- &ensp;
+&ensp;
 
 <h2 id=timeTesting><B>Time Testing</B></h2>
+A good tool to have, although functions do have different run times on different machines based on CPU or even the same machine based on how many other processes are taking place at the same time.
+
+&ensp;
 
 Javascript:
 
