@@ -72,7 +72,7 @@ const func = (array) => {
 func(arr)
 ```
 
-Denotes that for every data point (e.g. items in an array), one operation (i.e. loop, pass, iteration) must be made. As the data set increases, so does the run time in a linear fashion.
+Denotes that for every data point (e.g. elements in an array), one iteration (i.e. loop, pass) must be made. As the data set increases, so does the run time in a linear fashion.
 
 &ensp;
 
@@ -86,4 +86,8 @@ const arr = new Array(100).fill("element")
 const func = (array) => {
   return array.shift()
 }
+
+func(arr)
 ```
+
+Denotes that no matter how many data points are in the data set, the function will always iterate the same amount of times. 
