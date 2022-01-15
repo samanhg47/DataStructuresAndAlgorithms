@@ -5,8 +5,11 @@
 
 <h1 id=bigO>Big-O</h1>
 
+![Big-O Complexity Chart](./bigO_Complexity_Chart.jpeg)
+
 **Link List**
   ##### &ensp;&ensp; - [Time Testing](#timeTesting)
+  ##### &ensp;&ensp; - [O(n)](#on)
 
 &ensp;
 
@@ -52,3 +55,35 @@ def funcToCheck(params):
 funcToCheck(params)
 ```
 *`time.time()` is a function in the `time` library object (which is built into python) that returns the time since epoch in seconds.*
+
+&ensp;
+
+<h2 id=on><B>O(n)</B></h2>
+
+*Linear Time*
+
+```js
+const arr = new Array(100).fill("element")
+
+const func = (array) => {
+  array.forEach(a => a.concat(' processed'))
+}
+
+func(arr)
+```
+
+Denotes that for every data point (e.g. items in an array), one operation (i.e. loop, pass, iteration) must be made. As the data set increases, so does the run time in a linear fashion.
+
+&ensp;
+
+<h2 id=o1><B>O(1)</B></h2>
+
+*Constant Time*
+
+```js
+const arr = new Array(100).fill("element")
+
+const func = (array) => {
+  return array.shift()
+}
+```
