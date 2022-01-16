@@ -139,5 +139,25 @@ According to this rule, we always calculate Big-O based on the worst case senari
 
 ### *Rule 2: Remove Constants*
 
+```js
+function halfSumCalc(array){
+  const half = Math.floor(array.length / 2)
+  let halfSum = 0
+
+  for(let i = 0; i < half; i++){
+    halfSum += array[i]
+  }
+
+  let index = 0
+  while(index < array.length){
+    console.log('hi')
+    index++
+  }
+  return halfSum
+}
+halfSumCalc(arr)
+```
+
+According to this rule, we remove constants from or Big-O calculation. We do this because the minutae of the calculation become more and more insignificant as we scale for larger, more realistic, data sets. Let's go back to `halfSumCalc`. As we previously calculated, it's Big-O was O(5 + 3n). How did we go from that to just O(n). This can be explained a few different ways, I'm going to give the one that makes the most sense to me. Big-O, as used in computer science, is basically just a way to convey the relationship of data set length, to how long a particular function will take to run. With that in mind, all of the extra numbers become superfluous, as we just basically need to know that, if we were to increase the data set in a linear way, the run time of this function would also increase in a linear way. We show that by simply saying the Big-O is O(n) because when we see that, we know everything we need to know about the relationship this function's run time will have with a given data set's length.
 
 &ensp;
