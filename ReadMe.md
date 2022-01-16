@@ -9,12 +9,9 @@
 
 **Link List**
   ##### &ensp;&ensp; - [Time Testing](#timeTesting)
-  ##### &ensp;&ensp; - [O(1)](#o1)
-  ##### &ensp;&ensp; - [O(n)](#on)
-  ##### &ensp;&ensp; - [O(n^2)](#on2)
-  ##### &ensp;&ensp; - [O(2^n)](#o2n)
   ##### &ensp;&ensp; - [Calculating Big-O](#calculation)
   ##### &ensp;&ensp; - [Reduction Rules](#rules)
+  ##### &ensp;&ensp; - [Big-O Notations](#notations)
 
 &ensp;
 
@@ -62,65 +59,6 @@ funcToCheck(params)
 *`time.time()` is a function in the `time` library object (which is built into python) that returns the time since epoch in seconds.*
 
 &ensp;
-
-<h2 id=o1><b>O(1)</b></h2>
-
-*Constant Time*
-
-```js
-const arr = new Array(100).fill("element")
-
-const func = (array) => {
-  return array.shift()
-}
-
-func(arr)
-```
-
-Denotes that no matter how many data points are in the data set, the function will always iterate the same amount of times.
-
-&ensp;
-
-<h2 id=on><b>O(n)</b></h2>
-
-*Linear Time*
-
-```js
-const arr = new Array(100).fill("element")
-
-const func = (array) => {
-  array.forEach(a => a.concat(' processed'))
-}
-
-func(arr)
-```
-
-Denotes that for every data point (e.g. elements in an array), one iteration (i.e. loop, pass) must be made. As the data set increases, so does the run time in a linear fashion.
-
-&ensp;
-
-<h2 id=on2><b>O(n^2)</b></h2>
-
-*Nested Iteration*
-
-```js
-const arr = ['a', 'b', 'c', 'd', 'e']
-
-const func = (array) => {
-  array.forEach((a) => {
-    array.forEach((b) => {
-      console.log(a, b)
-    })
-  })
-}
-
-func(arr)
-```
-
-Denotes that n is in a certain amount of nested loops. If the function runs one loop and then another, Big-O is O(n + n)(we'll go over that later), if the function runs one loop inside of another, Big-O is O(n * n). A number multiplied by itself is simplified into an exponential so Big-O is O(n^2). If there was a loop nested in a loop nested in a loop, Big-O would be O(n^3). You see the pattern. As the data set increases linearly, run time increases in quadratic time.
-
-&ensp;
-
 
 <h2 id=calculation><b>Calculating Big-O</b></h2>
 
@@ -217,10 +155,93 @@ function halfSumCalc(array1, array2){
 }
 halfSumCalc(arr)
 ```
-This rule means that we need to have different terms for each parameter, i.e. input, the function takes in. Lets give our old friend `halfSumCalc` another parameter where it takes in another array. In this example what is the Big-O? Well, if we use our new rule and give each parameter a different term (lets say "n" and "m"), we can reduce the Big-O mathmatically to O(5 + n + 2m). If we use rule 2 to rid ourselves of the superfluities then we can further reduce the function to O(n + m).
+This rule means that we need to have different terms for each parameter, i.e. input, the function takes in. Lets give our old friend `halfSumCalc` another parameter where it takes in another array. In this example what is the Big-O? Well, if we use our new rule and give each parameter a different term (lets say "n" and "m"), we can reduce the Big-O mathmatically to O(5 + n + 2m). If we use rule 2 to rid ourselves of the superfluities then we can further reduce the function to O(n + m). if the `while` loop was nested in the `for` loop, our Big-O would be O(n*m).
 
 &ensp;
 
 <h3 id=rule4><i>Rule 4: Drop Non Dominants</i></h3>
 
+```js
+function (chars) {
+  console.log('these are our chars:')
+  chars.forEach(a => console.log(a))
+
+  console.log('these are their pairs')
+  chars.forEach((a) => {
+    chars.forEach((b) => {
+      console.log(a, b)
+    })
+  })
+}
+```
+This rule says that if we have two ways of handling an input, we only need to care pay attention to the most impactful of the two. Basically, this follows the same vibe as rule 2, we just need to pay attention to what will have the most impact at the end of the day. In the above example, what would the Big-O be based on what we already know? O(n + n^2) because steps that happen on the same level get added together and steps that are nested get multiplied. Abiding by rule 4, we would further reduce this to O(n^2) because the quadratic relationship will have *much* more of an impact on the run time than the linear relationship.
+
 &ensp;
+
+<h2 id=notations><b>Big-O Notations</b></h2>
+
+  ##### &ensp;&ensp; - [O(1)](#o1)
+  ##### &ensp;&ensp; - [O(n)](#on)
+  ##### &ensp;&ensp; - [O(n^2)](#on2)
+  ##### &ensp;&ensp; - [O(2^n)](#o2n)
+
+&ensp;
+
+<h3 id=o1><b>O(1)</b></h3>
+
+*Constant Time*
+
+```js
+const arr = new Array(100).fill("element")
+
+const func = (array) => {
+  return array.shift()
+}
+
+func(arr)
+```
+
+Denotes that no matter how many data points are in the data set, the function will always iterate the same amount of times.
+
+&ensp;
+
+<h3 id=on><b>O(n)</b></h3>
+
+*Linear Time*
+
+```js
+const arr = new Array(100).fill("element")
+
+const func = (array) => {
+  array.forEach(a => a.concat(' processed'))
+}
+
+func(arr)
+```
+
+Denotes that for every data point (e.g. elements in an array), one iteration (i.e. loop, pass) must be made. As the data set increases, so does the run time in a linear fashion.
+
+&ensp;
+
+<h3 id=on2><b>O(n^2)</b></h3>
+
+*Quadratic Time*
+
+```js
+const arr = ['a', 'b', 'c', 'd', 'e']
+
+const func = (array) => {
+  array.forEach((a) => {
+    array.forEach((b) => {
+      console.log(a, b)
+    })
+  })
+}
+
+func(arr)
+```
+
+Denotes that n is in a certain amount of nested loops. If the function runs one loop and then another, Big-O is O(n + n)(we'll go over that later), if the function runs one loop inside of another, Big-O is O(n * n). A number multiplied by itself is simplified into an exponential so Big-O is O(n^2). If there was a loop nested in a loop nested in a loop, Big-O would be O(n^3). You see the pattern. As the data set increases linearly, run time increases in quadratic time.
+
+&ensp;
+
