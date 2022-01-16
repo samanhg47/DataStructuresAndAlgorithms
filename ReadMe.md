@@ -180,16 +180,14 @@ This rule says that if we have two ways of handling an input, we only need to ca
 
 <h2 id=notations><b>Big-O Notations</b></h2>
 
-  ##### &ensp;&ensp; - [O(1)](#o1)
-  ##### &ensp;&ensp; - [O(n)](#on)
-  ##### &ensp;&ensp; - [O(n^2)](#on2)
+  ##### &ensp;&ensp; - [O(1): Constant Time](#o1)
+  ##### &ensp;&ensp; - [O(n): Linear Time](#on)
+  ##### &ensp;&ensp; - [O(n^2): Quadratic Time](#on2)
   ##### &ensp;&ensp; - [O(2^n)](#o2n)
 
 &ensp;
 
-<h3 id=o1><b>O(1)</b></h3>
-
-*Constant Time*
+<h3 id=o1><b>O(1)</b> - <i>Constant Time</i></h3>
 
 ```js
 const arr = new Array(100).fill("element")
@@ -205,9 +203,7 @@ Denotes that no matter how many data points are in the data set, the function wi
 
 &ensp;
 
-<h3 id=on><b>O(n)</b></h3>
-
-*Linear Time*
+<h3 id=on><b>O(n)</b> - <i>Linear Time</i></h3>
 
 ```js
 const arr = new Array(100).fill("element")
@@ -223,9 +219,7 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 
 &ensp;
 
-<h3 id=on2><b>O(n^2)</b></h3>
-
-*Quadratic Time*
+<h3 id=on2><b>O(n^2)</b> - <i>Quadratic Time</i></h3>
 
 ```js
 const arr = ['a', 'b', 'c', 'd', 'e']
