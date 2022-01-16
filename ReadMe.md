@@ -107,17 +107,17 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 const arr = ['a', 'b', 'c', 'd', 'e']
 
 const func = (array) => {
-  for(let i = 0; i < array.length; i++){
-    for(let j = 0; j < array.length; j++){
-      console.log(array[i], array[j])
-    }
-  }
+  array.forEach((a) => {
+    array.forEach((b) => {
+      console.log(a, b)
+    })
+  })
 }
 
 func(arr)
 ```
 
-Denotes that n is in a certain amount of nested loops. If the function runs one loop and then another, Big-O is O(n + n)(we'll go over that later), if the function runs one loop inside of another, Big-O is O(n * n). A number multiplied by itself is simplified into an exponential so Big-O is O(n^2). If there was a loop nested in a loop nested in a loop, Big-O would be O(n^3). You see the pattern. As the data set increases linearly, run time increases exponentially.
+Denotes that n is in a certain amount of nested loops. If the function runs one loop and then another, Big-O is O(n + n)(we'll go over that later), if the function runs one loop inside of another, Big-O is O(n * n). A number multiplied by itself is simplified into an exponential so Big-O is O(n^2). If there was a loop nested in a loop nested in a loop, Big-O would be O(n^3). You see the pattern. As the data set increases linearly, run time increases in quadratic time.
 
 &ensp;
 
