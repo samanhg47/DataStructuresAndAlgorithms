@@ -9,21 +9,21 @@
 
 **Link List**
   ##### &ensp;&ensp; - [Time Testing](#timeTesting)
-  ##### &ensp;&ensp; - [Calculating Big-O](#calculation)
-  ##### &ensp;&ensp; - [Reduction Rules](#rules)
   ##### &ensp;&ensp; - [O(n)](#on)
   ##### &ensp;&ensp; - [O(1)](#o1)
+  ##### &ensp;&ensp; - [Calculating Big-O](#calculation)
+  ##### &ensp;&ensp; - [Reduction Rules](#rules)
 
 &ensp;
 
  *Official Term* - Big-O Asymptotic Analysis
 
- *Use Case* - Denotes how scalable an algorithm is. How much longer does the algorithm take to run as we the data set grows?
+ *Use Case* - Denotes how scalable an algorithm is. How much longer does the algorithm take to run as the data set grows?
 
 &ensp;
 
 <h2 id=timeTesting><B>Time Testing</B></h2>
-A good tool to have, although functions do have different run times on different machines based on CPU or even the same machine based on how many other processes are taking place at the same time.
+In every language, we have a way to test how long a function takes to run. A good tool to have, although functions do have different run times on different machines based on CPU or even the same machine based on how many other processes are taking place at the same time.
 
 &ensp;
 
@@ -122,21 +122,22 @@ halfSumCalc(arr)
 
 Let's take into account `halfSumCalc`, the first step has a Big-O of O(1) because regardless of input length, that step only runs once. Why does `halfSum += array[i]` have a Big-O of O(n/2)? For the same reason as `i++`, because the computer will always have to calculate that section of code half as many times as the data set is long. Then why does `index++` have a Big-O of O(n)? Because that section will be run as many times as the number of data points. If we add up all of our Big-O notations for each line of code, we get the cumulative Big-O for the function. In this case O(1 + 1 + 1 + 1 + 1 + n + n + n/2 + n/2). Reduced? O(5 + 3n). For practical reasons, we reduce this even further and just call it O(n). Why? We'll discuss that in the next section.
 
+&ensp;
+
 <h2 id=rules><B>Reduction Rules</B></h2>
 
-### Rule 1: Worst Case
+### *Rule 1: Worst Case*
 
 ```js
 const arr = new Array(50).fill('element')
 arr.includes("element")
 ```
 
-&ensp;
-
-According to this rule, we always calculate Big-O based on the worst case senario. Pertaining to the example code block, the array method `array.prototype.incudes()` is a built in loop function that searches for an element in the array that strictly equals the input parameter. If it finds a match, the function then breaks and returns a truthy boolean because it's only goal is to see if a match exists at least once. While this is technically more efficient than if it were to loop through the whole array, even once a match was found, Big-O only takes into account the worst case senario. In this case, the function runs fastest if the match is the first element in the array and slowest if the match is last in the array. Thus, we calculate Big-O for when the match is last. In this case, that would be O(n).
+According to this rule, we always calculate Big-O based on the worst case senario. Pertaining to the example code block, the array method `array.prototype.incudes()` is a built in loop function that searches for an element in the array that strictly equals the input parameter. If it finds a "match", the function then breaks and returns a truthy boolean because its only goal is to see if a match exists at least once. While this is technically more efficient than if it were to loop through the whole array, even once a match was found, Big-O only takes into account the worst case senario. In the case of `array.prototype.incudes()`, the function runs fastest if the match is the first element in the array and slowest if the match is last in the array. Thus, we calculate Big-O for when the match is last, so that would be O(n). Why? Because if the potential data set (in this case that would be an array) were to increase in a linear fashion, so would the run time of this function when the parameter match is at the last index (the worst case scenario). What type of Big-O denotes a linear relationship between run time and data set length? O(n).
 
 &ensp;
 
-### Rule 2: Remove Constants
+### *Rule 2: Remove Constants*
+
 
 &ensp;
