@@ -9,8 +9,10 @@
 
 **Link List**
   ##### &ensp;&ensp; - [Time Testing](#timeTesting)
-  ##### &ensp;&ensp; - [O(n)](#on)
   ##### &ensp;&ensp; - [O(1)](#o1)
+  ##### &ensp;&ensp; - [O(n)](#on)
+  ##### &ensp;&ensp; - [O(n^2)](#on2)
+  ##### &ensp;&ensp; - [O(2^n)](#o2n)
   ##### &ensp;&ensp; - [Calculating Big-O](#calculation)
   ##### &ensp;&ensp; - [Reduction Rules](#rules)
 
@@ -22,7 +24,7 @@
 
 &ensp;
 
-<h2 id=timeTesting><B>Time Testing</B></h2>
+<h2 id=timeTesting><b>Time Testing</b></h2>
 In every language, we have a way to test how long a function takes to run. A good tool to have, although functions do have different run times on different machines based on CPU or even the same machine based on how many other processes are taking place at the same time.
 
 &ensp;
@@ -61,25 +63,7 @@ funcToCheck(params)
 
 &ensp;
 
-<h2 id=on><B>O(n)</B></h2>
-
-*Linear Time*
-
-```js
-const arr = new Array(100).fill("element")
-
-const func = (array) => {
-  array.forEach(a => a.concat(' processed'))
-}
-
-func(arr)
-```
-
-Denotes that for every data point (e.g. elements in an array), one iteration (i.e. loop, pass) must be made. As the data set increases, so does the run time in a linear fashion.
-
-&ensp;
-
-<h2 id=o1><B>O(1)</B></h2>
+<h2 id=o1><b>O(1)</b></h2>
 
 *Constant Time*
 
@@ -97,7 +81,48 @@ Denotes that no matter how many data points are in the data set, the function wi
 
 &ensp;
 
-<h2 id=calculation><B>Calculating Big-O</B></h2>
+<h2 id=on><b>O(n)</b></h2>
+
+*Linear Time*
+
+```js
+const arr = new Array(100).fill("element")
+
+const func = (array) => {
+  array.forEach(a => a.concat(' processed'))
+}
+
+func(arr)
+```
+
+Denotes that for every data point (e.g. elements in an array), one iteration (i.e. loop, pass) must be made. As the data set increases, so does the run time in a linear fashion.
+
+&ensp;
+
+<h2 id=on2><b>O(n^2)</b></h2>
+
+*Nested Iteration*
+
+```js
+const arr = ['a', 'b', 'c', 'd', 'e']
+
+const func = (array) => {
+  for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array.length; j++){
+      console.log(array[i], array[j])
+    }
+  }
+}
+
+func(arr)
+```
+
+Denotes that n is in a certain amount of nested loops. If the function runs one loop and then another, Big-O is O(n + n)(we'll go over that later), if the function runs one loop inside of another, Big-O is O(n * n). A number multiplied by itself is simplified into an exponential so Big-O is O(n^2). If there was a loop nested in a loop nested in a loop, Big-O would be O(n^3). You see the pattern. As the data set increases linearly, run time increases exponentially.
+
+&ensp;
+
+
+<h2 id=calculation><b>Calculating Big-O</b></h2>
 
 ```js
 function halfSumCalc(array){
@@ -124,9 +149,19 @@ Let's take into account `halfSumCalc`, the first step has a Big-O of O(1) becaus
 
 &ensp;
 
-<h2 id=rules><B>Reduction Rules</B></h2>
+<h2 id=rules><b>Reduction Rules</b></h2>
 
-### *Rule 1: Worst Case*
+##### [1. Worst Case](#rule1)
+
+##### [2. Remove Constants](#rule2)
+
+##### [3. Different Terms For Inputs](#rule3)
+
+##### [4. Drop Non Dominants](#rule4)
+
+&ensp;
+
+<h3 id=rule1><i>Rule 1: Worst Case</i></h3>
 
 ```js
 const arr = new Array(50).fill('element')
@@ -137,7 +172,7 @@ According to this rule, we always calculate Big-O based on the worst case senari
 
 &ensp;
 
-### *Rule 2: Remove Constants*
+<h3 id=rule2><i>Rule 2: Remove Constants</i></h3>
 
 ```js
 function halfSumCalc(array){
@@ -158,6 +193,34 @@ function halfSumCalc(array){
 halfSumCalc(arr)
 ```
 
-According to this rule, we remove constants from or Big-O calculation. We do this because the minutae of the calculation become more and more insignificant as we scale for larger, more realistic, data sets. Let's go back to `halfSumCalc`. As we previously calculated, it's Big-O was O(5 + 3n). How did we go from that to just O(n). This can be explained a few different ways, I'm going to give the one that makes the most sense to me. Big-O, as used in computer science, is basically just a way to convey the relationship of data set length, to how long a particular function will take to run. With that in mind, all of the extra numbers become superfluous, as we just basically need to know that, if we were to increase the data set in a linear way, the run time of this function would also increase in a linear way. We show that by simply saying the Big-O is O(n) because when we see that, we know everything we need to know about the relationship this function's run time will have with a given data set's length.
+According to this rule, we remove constants from or Big-O calculation. We do this because the minutae of the calculation become more and more insignificant as we scale for larger, more realistic, data sets. Let's go back to `halfSumCalc`. As we previously calculated, it's Big-O was O(5 + 3n). How did we go from that to just O(n). This can be explained a few different ways, I'm going to give the one that makes the most sense to me. Big-O, as used in computer science, is basically just a way to convey the relationship of data set length, to how long a particular function will take to run. With that in mind, all of the extra numbers become superfluous, as we just basically need to know that, if we were to increase the data set in a linear way, the run time of this function would also increase in a linear way. We show that by simply saying the Big-O is O(n) because when we see that, we know everything we need to know about the relationship this function's run time will have with a given data set's length. In other words, the only times numbers should be in our simplified Big-O notation are to denote a constant relationship, e.g O(1), or when we have an exponential relationship, e.g. O(4^n), O(n^5), etc.
+
+&ensp;
+
+<h3 id=rule3><i>Rule 3: Different Terms For Inputs</i></h3>
+
+```js
+function halfSumCalc(array1, array2){
+  const half = Math.floor(array1.length / 2)
+  let halfSum = 0
+
+  for(let i = 0; i < half; i++){
+    halfSum += array1[i]
+  }
+
+  let index = 0
+  while(index < array2.length){
+    console.log('hi')
+    index++
+  }
+  return halfSum
+}
+halfSumCalc(arr)
+```
+This rule means that we need to have different terms for each parameter, i.e. input, the function takes in. Lets give our old friend `halfSumCalc` another parameter where it takes in another array. In this example what is the Big-O? Well, if we use our new rule and give each parameter a different term (lets say "n" and "m"), we can reduce the Big-O mathmatically to O(5 + n + 2m). If we use rule 2 to rid ourselves of the superfluities then we can further reduce the function to O(n + m).
+
+&ensp;
+
+<h3 id=rule4><i>Rule 4: Drop Non Dominants</i></h3>
 
 &ensp;
