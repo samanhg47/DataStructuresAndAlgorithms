@@ -1,5 +1,6 @@
 ### **Link List** (haha, punny)
   - [Big O](#bigO)
+  - [Data Structures](#ds)
 
 &ensp;
 
@@ -273,3 +274,38 @@ func(arr)
 Denotes that for every data point (e.g. elements in an array), one iteration (i.e. loop, pass) must be made. As the data set increases, so does the run time in a linear fashion.
 
 &ensp;
+
+<h1 id=ds>Data Structures</h1>
+
+### *Definition* - A collection of values, given certain relationships to specialize them for specific use cases.
+
+### Types
+
+- [Arrays](#arrays)
+- [Stacks](#stacks)
+- [Queues](#queues)
+- [Linked Lists](#linkedLists)
+- [Trees](#trees)
+- [Tries](#tries)
+- [Graphs](#graphs)
+- [Hash Tables](#hashTables)
+
+### Operations
+
+- **Insertion:** Adding an item to a structure
+- **Deletion:** Removing an item from a structure
+- **Traversal:** Accessing each data item once for processing
+- **Searching:** Searching for a specific item or category within the structure
+- **Sorting:** Organizing data in a way that's understandable and comprehensive
+- **Access:** Method of picking out a specific item or items
+
+&ensp;
+
+<h2 id='arrays'><b>Arrays</b></h2>
+
+### Time Complexities
+
+- *Acces:* O(1)
+- *Search:* O(n)
+- *Insertion:* O(n)
+- *Deletion:* O(n)
