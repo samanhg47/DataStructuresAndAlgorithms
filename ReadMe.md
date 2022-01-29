@@ -303,6 +303,11 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 
 <h2 id='arrays'><b>Arrays</b></h2>
 
+<h3 id='arrays'>Types</h3>
+
+- [Static](#staticArr)
+- [Dynamic](#dynamicArr)
+
 ### Time Complexities
 
 - *Acces:* O(1)
