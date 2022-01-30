@@ -282,13 +282,13 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 ### Types
 
 - [Arrays](#arrays)
+- [Hash Tables](#hashTables)
 - [Stacks](#stacks)
 - [Queues](#queues)
 - [Linked Lists](#linkedLists)
 - [Trees](#trees)
 - [Tries](#tries)
 - [Graphs](#graphs)
-- [Hash Tables](#hashTables)
 
 ### Operations
 
@@ -303,22 +303,37 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 
 <h2 id='arrays'><b>Arrays</b></h2>
 
-### Types
+### **Time Complexities**
+
+- *Insertion:* O(n)
+- *Deletion:* O(n)
+- *Traversal:* O(n)
+- *Search:* O(n)
+- *Sorting:* Depends
+- *Access:* O(1)
+
+### **Types**
 
 - [Static](#staticArr)
 - [Dynamic](#dynamicArr)
 
-### Time Complexities
-
-- *Acces:* O(1)
-- *Search:* O(n)
-- *Insertion:* O(n)
-- *Deletion:* O(n)
-
-<h3 id='staticArr'>Static Arrays</h3>
+<h3 id='staticArr'><b>Static Arrays</b></h3>
 
 Static arrays have a set length, decided upon creation. Once created, they are then filled with data. Static arrays are useful when either you know exactly how long your data set will be or you know it wont exceed a certain length. Because the length is set upon creation, so is its place in your memory.
 
-<h3 id='dynamicArr'>Dynamic Arrays</h3>
+<h3 id='dynamicArr'><b>Dynamic Arrays</b></h3>
 
 Dynamic arrays have the ability to  "dynamically" change in length but, as with everything, there is a trade off. Because you get the added flexibility of an array with an essentially infine length, as your array grows in length it will need to be saved in new places in the machine's memory. Thus, it must be iterated over are resaved in a new partition. This obviously increases time and spece complexities on certain operations.
+
+&ensp;
+
+<h2 id='hashTables'><b>Hash Tables</b></h2>
+
+- *Insertion:* O(1)
+- *Deletion:* O(1)
+- *Traversal:* O(n)
+- *Search:* O(1)
+- *Sorting:* Depends
+- *Access:* O(1)
+
+Hash tables are basically unordered arrays, where you choose to save a `value` and a `key` in reference to it. The way arrays work, when you add the first item (e.g. `x`) it saves it as `{0: x}`. So Arrays are hash tables where the key is automatically just the value's ordered position. For hash tables, theoretically, you can have any data type be a key and any datatype be a value; certain languages do have constraints (e.g. Javascript's `object` prototype can only store strings and numbers as keys, whereas its `map` prototype can store any datatype as a key).
