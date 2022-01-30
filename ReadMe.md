@@ -320,3 +320,5 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 Static arrays have a set length, decided upon creation. Once created, they are then filled with data. Static arrays are useful when either you know exactly how long your data set will be or you know it wont exceed a certain length. Because the length is set upon creation, so is its place in your memory.
 
 <h3 id='dynamicArr'>Dynamic Arrays</h3>
+
+Dynamic arrays have the ability to  "dynamically" change in length but, as with everything, there is a trade off. Because you get the added flexibility of an array with an essentially infine length, as your array grows in length it will need to be saved in new places in the machine's memory. Thus, it must be iterated over are resaved in a new partition. This obviously increases time and spece complexities on certain operations.
