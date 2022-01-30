@@ -303,7 +303,7 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 
 <h2 id='arrays'><b>Arrays</b></h2>
 
-<h3 id='arrays'>Types</h3>
+### Types
 
 - [Static](#staticArr)
 - [Dynamic](#dynamicArr)
@@ -314,3 +314,9 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 - *Search:* O(n)
 - *Insertion:* O(n)
 - *Deletion:* O(n)
+
+<h3 id='staticArr'>Static Arrays</h3>
+
+Static arrays have a set length, decided upon creation. Once created, they are then filled with data. Static arrays are useful when either you know exactly how long your data set will be or you know it wont exceed a certain length. Because the length is set upon creation, so is its place in your memory.
+
+<h3 id='dynamicArr'>Dynamic Arrays</h3>
