@@ -283,9 +283,9 @@ Denotes that for every data point (e.g. elements in an array), one iteration (i.
 
 - [Arrays](#arrays)
 - [Hash Tables](#hashTables)
+- [Linked Lists](#linkedLists)
 - [Stacks](#stacks)
 - [Queues](#queues)
-- [Linked Lists](#linkedLists)
 - [Trees](#trees)
 - [Tries](#tries)
 - [Graphs](#graphs)
@@ -329,6 +329,8 @@ Dynamic arrays have the ability to  "dynamically" change in length but, as with 
 
 <h2 id='hashTables'><b>Hash Tables</b></h2>
 
+### **Time Complexities**
+
 - *Insertion:* O(1)
 - *Deletion:* O(1)
 - *Traversal:* O(n)
@@ -336,4 +338,152 @@ Dynamic arrays have the ability to  "dynamically" change in length but, as with 
 - *Sorting:* Depends
 - *Access:* O(1)
 
-Hash tables are basically unordered arrays, where you choose to save a `value` and a `key` in reference to it. The way arrays work, when you add the first item (e.g. `x`) it saves it as `{0: x}`. So Arrays are hash tables where the key is automatically just the value's ordered position. For hash tables, theoretically, you can have any data type be a key and any datatype be a value; certain languages do have constraints (e.g. Javascript's `object` prototype can only store strings and numbers as keys, whereas its `map` prototype can store any datatype as a key).
+Hash tables are basically unordered arrays, where you choose to save a `value` and a `key` in reference to it. The way arrays work, when you add the first item (e.g. `x`) it saves it as `{0: x}`. So Arrays are hash tables where the key is automatically just the value's ordered position. For hash tables, theoretically, you can have any data type be a key and any datatype be a value; certain languages do have constraints (e.g. Javascript's `object` prototype can only store strings and numbers as keys, whereas its `map` prototype can store any datatype as a key). Some languages have numerate their hash structures by default. The afforementioned `map` prototype in Javascript saves the order key/value pairs are saved into the structure. Python's `dictionary` does the same thing.
+
+&ensp;
+
+<h2 id='linkedLists'><b>Linked Lists</b></h2>
+
+Linked list are composed of two-part nodes. The first part or element in a node is the value stored at the node. The second element of the node is a pointer, which directs you to the next node. Linked lists are null-terminated, which means the last value is `null`, which lets the function traversing it that it's at the end. The node before `null` is called the tail and the first node is called the head
+
+### **Time Complexities**
+
+- *Insertion:* O(1)
+- *Deletion:* O(1)
+- *Traversal:* O(n)
+- *Search:* O(n)
+- *Sorting:* already sorted
+- *Access:* O(n)
+
+
+Because Javascript is my base language and it doesn't come out of the box with an object for linked lists, I've included a pretty good model below which we will break down piece by piece.
+
+```js
+class Node{
+	constructor(value, next){
+  	this.value = value
+    this.next = next
+  }
+}
+class LinkedList{
+	constructor(value){
+  	this.set = {}
+    this.addValue(value)
+  	this.head = new Node(value, null)
+    this.tail = this.head
+    this.length = 1
+  }
+  checkIndex(index, bool=false){
+  	if(typeof index === 'number' && index >= 0 && index === Math.floor(index)){
+    	if (bool){
+      	if(index < this.length){
+        	return true
+        }
+        return false
+      }
+      return true
+    }
+    return false
+  }
+  addValue(value){
+  	if(typeof value === 'object'){
+    	value = JSON.stringify(value)
+    }
+    this.set[value] ? this.set[value] ++ : this.set[value] = 1
+  }
+  deleteValue(value){
+  	if(typeof value === 'object'){
+    	value = JSON.stringify(value)
+    }
+    this.set[value] --
+  }
+  includes(value){
+  	if(typeof value === 'object'){
+    	value = JSON.stringify(value)
+    }
+    return this.set[value] ? true : false
+  }
+  nodeAt(index){
+  	if(this.checkIndex(index, true)){
+    	let node = this.head
+      let counter = 0
+      while(counter < index){
+        node = node.next
+        counter ++
+      }
+      return node
+    }
+    undefined
+  }
+  asArray(){
+  	let node = this.head
+    let counter = 0
+    const arr = [node.value]
+    while(counter < this.length-1){
+      node = node.next
+      arr.push(node.value)
+      counter ++
+    }
+    return arr
+  }
+	append(value){
+  	this.addValue(value)
+    const newNode = new Node(value, null)
+    this.tail.next = newNode
+    this.tail = newNode    
+    this.length ++
+    return this
+  }
+  prepend(value){
+  	this.addValue(value)
+  	const newNode = new Node(value, this.head)
+    this.head = newNode
+    this.length ++
+    return this
+  }
+  insert(value, index){
+  	if(this.checkIndex(index)){
+    	if (index === 0){
+      	return this.prepend(value)
+      }else if(index < this.length){
+      	let node = this.nodeAt(index - 1)
+        const newNode = new Node(value, node.next)
+        node.next = newNode
+        this.addValue(value)
+        this.length ++
+        return this
+      }
+    	this.append(value)
+    }
+    return "Invalid Node Index"
+  }
+  remove(index){
+  	if(this.checkIndex(index, true)){
+    	let val
+    	if(index === 0){
+      	const newHead = this.head.next
+        val = this.head.value
+        delete this.head
+        this.head = newHead
+      } else {
+        let node = this.nodeAt(index - 1)
+        const newNext = node.next.next
+        val = node.next.value
+        delete node.next
+        node.next = newNext
+      }
+      this.deleteValue(val)
+      this.length --
+      return this
+    }
+    return "Invalid Node Index"
+  }
+  valueAt(index){
+  	if(this.checkIndex(index, true)){
+  	      let node = this.nodeAt(index)
+  	      return node.value
+  	    }
+    return undefined
+  }
+}
+```
