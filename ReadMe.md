@@ -492,6 +492,9 @@ class LinkedList{
 
 To learn about linked lists we first need to learn what nodes are. A node is a data point within a linked list comprised of two things, a value and a pointer. A value is pretty self-explanatory, it's the value stored within the node. The pointer is basically the address of the next node within the linked list. It tells the machine where in its memory bank to search for the next node, holding the next value; thus creating the links of our list. As a fan of object-oriented programming, I've created a class for our nodes so that we don't have to keep rewriting the same block of code every time we want to create a new node. For ease of use, it takes in two parameters, the value to be held within the node and the "address" of the next node. Linked lists  are  null-terminated, which means that the last node in our links list must have a pointer which points to a `null` value.
 
+### **Linked List Constructor**
+
+In the constructor function for our link to list you can see that, initially, Our head and tail are given the same value and the pointer for said value is null. The head of a linked list is the first Noel with in that list. The tail of a linked list is the last value within that list. As we previously went over, the tail of a linked list will always point to a null value. Knowing this, it becomes clear why our head and tail must have the same value, as there is only one value in our linked list. The length is self-explanatory. There is only one node thus the length is one.
 
 ### **LinkedList.nodeAt()**
 
