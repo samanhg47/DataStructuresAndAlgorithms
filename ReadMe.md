@@ -488,6 +488,14 @@ class LinkedList{
 }
 ```
 
+### **Node Class**
+
+To learn about linked lists we first need to learn what nodes are. A node is a data point within a linked list comprised of two things, a value and a pointer. A value is pretty self-explanatory, it's the value stored within the node. The pointer is basically the address of the next node within the linked list. It tells the machine where in its memory bank to search for the next node, holding the next value; thus creating the links of our list. As a fan of object-oriented programming, I've created a class for our nodes so that we don't have to keep rewriting the same block of code every time we want to create a new node. For ease of use, it takes in two parameters, the value to be held within the node and the "address" of the next node. Linked lists  are  null-terminated, which means that the last node in our links list must have a pointer which points to a `null` value.
+
+
+### **LinkedList.nodeAt()**
+
+
 ### **LinkedList.set**
 
 I've included a special attribute in my linked list because of the fact that searching them is normally a process with a time complexity of O(n). I've added an hash table that saves the values of each node as a key so that you can simply check if a given value exists within the list with `LinkedList.includes(value)`. As you can see, under the hood we're just checking to see if that key exists within our `this.set` object and that it's value is truethy. If you read the functions `this.addValue` and `this.deleteValue` that we log existing node values by incrementing the numeric value at it's corresponding key within the `this.set` object. This process has a time complexity of O(1) and is better than using Javascript's `Set()` object (which I had originally used) or simply having booleans as the values because it allows for the possibility of two different nodes having the same value. If the value at the key is `0` it's still falsey so the code doesn't break or allow for negative values. This also gives the added bonus of logging deleted node values; we can simply look at which keys within our `this.set` object have a value of `0`. Because hash tables in javascript cannot store objects, I programmed the each function that accesses our `this.set` table to check if the value it's intaking is an object and stringify said object if so.
