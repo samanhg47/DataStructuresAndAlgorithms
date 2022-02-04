@@ -453,7 +453,7 @@ class LinkedList{
         this.length ++
         return this
       }
-    	this.append(value)
+    	return this.append(value)
     }
     return "Invalid Node Index"
   }
@@ -495,6 +495,21 @@ To learn about linked lists we first need to learn what nodes are. A node is a d
 ### **Linked List Constructor**
 
 In the constructor function for our link to list you can see that, initially, Our head and tail are given the same value and the pointer for said value is null. The head of a linked list is the first Noel with in that list. The tail of a linked list is the last value within that list. As we previously went over, the tail of a linked list will always point to a null value. Knowing this, it becomes clear why our head and tail must have the same value, as there is only one value in our linked list. The length is self-explanatory. There is only one node thus the length is one.
+
+### **LinkedList.append()**
+
+```js
+append(value){
+  	this.addValue(value)
+    const newNode = new Node(value, null)
+    this.tail.next = newNode
+    this.tail = newNode    
+    this.length ++
+    return this
+  }
+```
+
+First, new value is add to our `this.set` object to preserve its accuracy. Next we create a new `Node` object with a value of our parameter and and a pointer directing us to null as this new node will become the tail of our linked list. We then replace the null value that our current tail is pointing to with the new node we just created, as it will now be the second to last node. After that we will replace the tail with our new node. This doesn't delete the node that used to be the tail because remember, the node before it is still holding it's "address" as the value of it's `next` key/value pair. Lastly we increment the length of our list to preserve its accuracy.
 
 ### **LinkedList.nodeAt()**
 
