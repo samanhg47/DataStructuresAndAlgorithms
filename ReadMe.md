@@ -511,7 +511,6 @@ append(value){
 
 First, new value is add to our `this.set` object to preserve its accuracy. Next we create a new `Node` object with a value of our parameter and and a pointer directing us to null as this new node will become the tail of our linked list. We then replace the null value that our current tail is pointing to with the new node we just created, as it will now be the second to last node. After that we will replace the tail with our new node. This doesn't delete the node that used to be the tail because remember, the node before it is still holding it's "address" as the value of it's `next` key/value pair. Lastly we increment the length of our list to preserve its accuracy.
 
-### **LinkedList.nodeAt()**
 
 
 ### **LinkedList.set**
