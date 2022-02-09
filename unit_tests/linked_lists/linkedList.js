@@ -130,4 +130,13 @@ class LinkedList {
   }
 }
 
+const list = new LinkedList('4')
+const obj = {
+  set: { 4: 1 },
+  head: { value: '4', next: null },
+  tail: { value: '4', next: null },
+  length: 1
+}
+console.log(JSON.stringify(list) == JSON.stringify(obj))
+
 module.exports = LinkedList
