@@ -500,18 +500,30 @@ In the constructor function for our link to list you can see that, initially, Ou
 
 ```js
 append(value){
-  	this.addValue(value)
-    const newNode = new Node(value, null)
-    this.tail.next = newNode
-    this.tail = newNode    
-    this.length ++
-    return this
-  }
+	this.addValue(value)
+  const newNode = new Node(value, null)
+  this.tail.next = newNode
+  this.tail = newNode    
+  this.length ++
+  return this
+}
 ```
 
 First, new value is add to our `this.set` object to preserve its accuracy. Next we create a new `Node` object with a value of our parameter and and a pointer directing us to null as this new node will become the tail of our linked list. We then replace the null value that our current tail is pointing to with the new node we just created, as it will now be the second to last node. After that we will replace the tail with our new node. This doesn't delete the node that used to be the tail because remember, the node before it is still holding it's "address" as the value of it's `next` key/value pair. Lastly we increment the length of our list to preserve its accuracy.
 
+### **LinkedList.prepend()**
 
+```js
+prepend(value){
+	this.addValue(value)
+	const newNode = new Node(value, this.head)
+  this.head = newNode
+  this.length ++
+  return this
+}
+```
+
+Prepending is pretty similar. We first add the new value to our set, so as to keep an accurate record of the values within our list. We then create a new `node` object, in which we store the value we want an a pointer to the object that used to be the head. Next, we set this new node pointing to the old head as the new head. Lastly, we increment the size to keep an accurate record.
 
 ### **LinkedList.set**
 
