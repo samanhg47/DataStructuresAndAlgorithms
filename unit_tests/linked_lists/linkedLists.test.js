@@ -53,3 +53,26 @@ test('Properly inserts value', () => {
   }
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
+
+test('Properly removes value', () => {
+  const carla = { name: 'Carla' }
+  const carla2 = { name: 'Carla' }
+  const list = new LinkedList('4')
+    .prepend(carla)
+    .append(carla2)
+    .insert({ height: 4, width: 5 }, 2)
+    .insert(146, 2)
+    .remove(3)
+  const obj = {
+    head: {
+      value: { name: 'Carla' },
+      next: {
+        value: '4',
+        next: { value: 146, next: { value: { name: 'Carla' }, next: null } }
+      }
+    },
+    tail: { value: { name: 'Carla' }, next: null },
+    length: 4
+  }
+  expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
+})
