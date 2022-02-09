@@ -6,8 +6,6 @@ class Node {
 }
 class LinkedList {
   constructor(value) {
-    this.set = {}
-    this._addValue(value)
     this.head = new Node(value, null)
     this.tail = this.head
     this.length = 1
@@ -27,24 +25,6 @@ class LinkedList {
       return true
     }
     return false
-  }
-  _addValue(value) {
-    if (typeof value === 'object') {
-      value = JSON.stringify(value)
-    }
-    this.set[value] ? this.set[value]++ : (this.set[value] = 1)
-  }
-  _deleteValue(value) {
-    if (typeof value === 'object') {
-      value = JSON.stringify(value)
-    }
-    this.set[value]--
-  }
-  includes(value) {
-    if (typeof value === 'object') {
-      value = JSON.stringify(value)
-    }
-    return this.set[value] ? true : false
   }
   _nodeAt(index) {
     if (this._checkIndex(index, true)) {
@@ -69,8 +49,33 @@ class LinkedList {
     }
     return arr
   }
+  hashed() {
+    let node = this.head
+    let counter = 0
+    const hash = {}
+    let value
+    while (counter < this.length) {
+      if (typeof node.value !== 'object') {
+        value = node.value
+        if (hash[value]) {
+          hash[value] += 1
+        } else {
+          hash[value] = 1
+        }
+      } else {
+        value = JSON.stringify(node.value)
+        if (hash[value]) {
+          hash[value] += 1
+        } else {
+          hash[value] = 1
+        }
+      }
+      node = node.next
+      counter++
+    }
+    return hash
+  }
   append(value) {
-    this._addValue(value)
     const newNode = new Node(value, null)
     this.tail.next = newNode
     this.tail = newNode
@@ -78,7 +83,6 @@ class LinkedList {
     return this
   }
   prepend(value) {
-    this._addValue(value)
     const newNode = new Node(value, this.head)
     this.head = newNode
     this.length++
@@ -92,7 +96,6 @@ class LinkedList {
         let node = this._nodeAt(index - 1)
         const newNode = new Node(value, node.next)
         node.next = newNode
-        this._addValue(value)
         this.length++
         return this
       }
@@ -115,7 +118,6 @@ class LinkedList {
         delete node.next
         node.next = newNext
       }
-      this._deleteValue(val)
       this.length--
       return this
     }
