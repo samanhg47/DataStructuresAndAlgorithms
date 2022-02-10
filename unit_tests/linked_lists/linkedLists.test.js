@@ -73,8 +73,6 @@ test('Properly Mutates Values', () => {
 })
 
 test('Properly Converts List To Array', () => {
-  // const carla = { name: 'Carla' }
-  // const carla2 = { name: 'Carla' }
   const list = new LinkedList('4')
     .prepend(carla)
     .append(carla2)
@@ -82,4 +80,16 @@ test('Properly Converts List To Array', () => {
     .asArray()
   const arr = [carla, '4', 146, carla2]
   expect(JSON.stringify(list)).toBe(JSON.stringify(arr))
+})
+
+test('Properly Converts List To Hash Table', () => {
+  const list = new LinkedList('4')
+    .prepend(carla)
+    .append(carla2)
+    .insert(2, 146)
+    .hashed()
+  expect(list.get(carla)).toBe(1)
+  expect(list.get(carla2)).toBe(1)
+  expect(list.get(146)).toBe(1)
+  expect(list.get('4')).toBe(1)
 })
