@@ -1,6 +1,6 @@
 const LinkedList = require('./linkedList')
 
-test('properly creates linked list', () => {
+test('Properly Creates Linked List', () => {
   const list = new LinkedList('4')
   const obj = {
     head: { value: '4', next: null },
@@ -10,7 +10,7 @@ test('properly creates linked list', () => {
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
-test('Properly prepends value', () => {
+test('Properly Prepends Value', () => {
   const carla = { name: 'Carla' }
   const list = new LinkedList('4').prepend(carla)
   const obj = {
@@ -21,7 +21,7 @@ test('Properly prepends value', () => {
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
-test('Properly appends value', () => {
+test('Properly Appends Value', () => {
   const carla = { name: 'Carla' }
   const carla2 = { name: 'Carla' }
   const list = new LinkedList('4').prepend(carla).append(carla2)
@@ -36,10 +36,10 @@ test('Properly appends value', () => {
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
-test('Properly inserts value', () => {
+test('Properly Inserts Value', () => {
   const carla = { name: 'Carla' }
   const carla2 = { name: 'Carla' }
-  const list = new LinkedList('4').prepend(carla).append(carla2).insert(146, 2)
+  const list = new LinkedList('4').prepend(carla).append(carla2).insert(2, 146)
   const obj = {
     head: {
       value: { name: 'Carla' },
@@ -54,15 +54,37 @@ test('Properly inserts value', () => {
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
-test('Properly removes value', () => {
+test('Properly Removes Value', () => {
   const carla = { name: 'Carla' }
   const carla2 = { name: 'Carla' }
   const list = new LinkedList('4')
     .prepend(carla)
     .append(carla2)
-    .insert({ height: 4, width: 5 }, 2)
-    .insert(146, 2)
+    .insert(2, { height: 4, width: 5 })
+    .insert(2, 146)
     .remove(3)
+  const obj = {
+    head: {
+      value: { name: 'Carla' },
+      next: {
+        value: '4',
+        next: { value: 146, next: { value: { name: 'Carla' }, next: null } }
+      }
+    },
+    tail: { value: { name: 'Carla' }, next: null },
+    length: 4
+  }
+  expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
+})
+
+test('Properly Mutates Values', () => {
+  const carla = { name: 'Carla' }
+  const carla2 = { name: 'Carla' }
+  const list = new LinkedList('4')
+    .prepend(carla)
+    .append(carla2)
+    .insert(2, { height: 4, width: 5 })
+    .mutateValue(2, 146)
   const obj = {
     head: {
       value: { name: 'Carla' },
