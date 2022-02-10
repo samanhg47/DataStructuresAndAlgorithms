@@ -365,19 +365,21 @@ class Node{
     this.next = next
   }
 }
-class LinkedList{
-	constructor(value){
-  	this.set = {}
-    this.addValue(value)
-  	this.head = new Node(value, null)
+class LinkedList {
+  constructor(value) {
+    this.head = new Node(value, null)
     this.tail = this.head
     this.length = 1
   }
-  checkIndex(index, bool=false){
-  	if(typeof index === 'number' && index >= 0 && index === Math.floor(index)){
-    	if (bool){
-      	if(index < this.length){
-        	return true
+  _checkIndex(index, bool = false) {
+    if (
+      typeof index === 'number' &&
+      index >= 0 &&
+      index === Math.floor(index)
+    ) {
+      if (bool) {
+        if (index < this.length) {
+          return true
         }
         return false
       }
@@ -385,105 +387,108 @@ class LinkedList{
     }
     return false
   }
-  addValue(value){
-  	if(typeof value === 'object'){
-    	value = JSON.stringify(value)
-    }
-    this.set[value] ? this.set[value] ++ : this.set[value] = 1
-  }
-  deleteValue(value){
-  	if(typeof value === 'object'){
-    	value = JSON.stringify(value)
-    }
-    this.set[value] --
-  }
-  includes(value){
-  	if(typeof value === 'object'){
-    	value = JSON.stringify(value)
-    }
-    return this.set[value] ? true : false
-  }
-  nodeAt(index){
-  	if(this.checkIndex(index, true)){
-    	let node = this.head
+  _nodeAt(index) {
+    if (this._checkIndex(index, true)) {
+      let node = this.head
       let counter = 0
-      while(counter < index){
+      while (counter < index) {
         node = node.next
-        counter ++
+        counter++
       }
       return node
     }
-    undefined
+    return undefined
   }
-  asArray(){
-  	let node = this.head
-    let counter = 0
-    const arr = [node.value]
-    while(counter < this.length-1){
-      node = node.next
-      arr.push(node.value)
-      counter ++
-    }
-    return arr
-  }
-	append(value){
-  	this.addValue(value)
+  append(value) {
     const newNode = new Node(value, null)
     this.tail.next = newNode
-    this.tail = newNode    
-    this.length ++
+    this.tail = newNode
+    this.length++
     return this
   }
-  prepend(value){
-  	this.addValue(value)
-  	const newNode = new Node(value, this.head)
+  prepend(value) {
+    const newNode = new Node(value, this.head)
     this.head = newNode
-    this.length ++
+    this.length++
     return this
   }
-  insert(value, index){
-  	if(this.checkIndex(index)){
-    	if (index === 0){
-      	return this.prepend(value)
-      }else if(index < this.length){
-      	let node = this.nodeAt(index - 1)
+  insert(index, value) {
+    if (this._checkIndex(index)) {
+      if (index === 0) {
+        return this.prepend(value)
+      } else if (index < this.length) {
+        let node = this._nodeAt(index - 1)
         const newNode = new Node(value, node.next)
         node.next = newNode
-        this.addValue(value)
-        this.length ++
+        this.length++
         return this
       }
-    	return this.append(value)
+      return this.append(value)
     }
-    return "Invalid Node Index"
+    return undefined
   }
-  remove(index){
-  	if(this.checkIndex(index, true)){
-    	let val
-    	if(index === 0){
-      	const newHead = this.head.next
+  remove(index) {
+    if (this._checkIndex(index, true)) {
+      let val
+      if (index === 0) {
+        const newHead = this.head.next
         val = this.head.value
         delete this.head
         this.head = newHead
       } else {
-        let node = this.nodeAt(index - 1)
+        let node = this._nodeAt(index - 1)
         const newNext = node.next.next
         val = node.next.value
         delete node.next
         node.next = newNext
       }
-      this.deleteValue(val)
-      this.length --
+      this.length--
       return this
     }
-    return "Invalid Node Index"
-  }
-  valueAt(index){
-  	if(this.checkIndex(index, true)){
-  	      let node = this.nodeAt(index)
-  	      return node.value
-  	    }
     return undefined
+  }
+  mutateValue(index, value) {
+    if (this._checkIndex(index, true)) {
+      let node = this._nodeAt(index)
+      node.value = value
+      return this
+    }
+    return undefined
+  }
+  valueAt(index) {
+    if (this._checkIndex(index, true)) {
+      let node = this._nodeAt(index)
+      return node.value
+    }
+    return undefined
+  }
+  asArray() {
+    let node = this.head
+    let counter = 0
+    const arr = [node.value]
+    while (counter < this.length - 1) {
+      node = node.next
+      arr.push(node.value)
+      counter++
+    }
+    return arr
+  }
+  hashed() {
+    let node = this.head
+    let counter = 0
+    const hash = new Map()
+    let value
+    while (counter < this.length) {
+      value = node.value
+      if (hash.get(value)) {
+        hash.set(value, hash.get(value) + 1)
+      } else {
+        hash.set(value, 1)
+      }
+      node = node.next
+      counter++
+    }
+    return hash
   }
 }
 ```
