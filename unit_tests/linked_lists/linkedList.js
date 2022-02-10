@@ -124,21 +124,6 @@ class LinkedList {
       } else {
         hash.set(value, 1)
       }
-      // if (typeof node.value !== 'object') {
-      //   value = node.value
-      //   if (hash[value]) {
-      //     hash[value] += 1
-      //   } else {
-      //     hash[value] = 1
-      //   }
-      // } else {
-      //   value = JSON.stringify(node.value)
-      //   if (hash[value]) {
-      //     hash[value] += 1
-      //   } else {
-      //     hash[value] = 1
-      //   }
-      // }
       node = node.next
       counter++
     }
