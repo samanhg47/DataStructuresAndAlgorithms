@@ -76,6 +76,8 @@ const arr = [carla, '4', 146, carla2]
 const list = new LinkedList('4').prepend(carla).append(carla2).insert(2, 146)
 
 test('Properly Converts List To Array', () => {
+  carla[3] = true
+  console.log(list.asArray())
   expect(JSON.stringify(list.asArray())).toBe(JSON.stringify(arr))
 })
 

@@ -10,19 +10,15 @@ class LinkedList {
     this.tail = this.head
     this.length = 1
   }
-  _checkIndex(index, bool = false) {
-    if (
-      typeof index === 'number' &&
-      index >= 0 &&
-      index === Math.floor(index)
-    ) {
-      if (bool) {
-        if (index < this.length) {
-          return true
-        }
-        return false
-      }
-      return true
+  _checkIndex(index, checkLength = false) {
+    function indexIsNaturalNumber(i) {
+      const isNumber = typeof i === 'number'
+      const isWholeNumber = i === Math.floor(i)
+      const isNaturalNumber = i >= 0
+      return isNumber && isWholeNumber && isNaturalNumber
+    }
+    if (indexIsNaturalNumber(index)) {
+      return checkLength ? index < this.length : true
     }
     return false
   }
