@@ -13,6 +13,16 @@ test('Properly Creates Linked List', () => {
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
+test('Properly Handles No Input', () => {
+  const list = new LinkedList()
+  const obj = {
+    head: null,
+    tail: null,
+    length: 0
+  }
+  expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
+})
+
 test('Properly Prepends Value', () => {
   const list = new LinkedList(['4']).prepend(carla)
   const obj = {
@@ -80,7 +90,6 @@ const list = new LinkedList(['4']).prepend(carla).append(carla2).insert(2, 146)
 
 test('Properly Converts List To Array', () => {
   carla[3] = true
-  console.log(list.asArray())
   expect(JSON.stringify(list.asArray())).toBe(JSON.stringify(arr))
 })
 
@@ -99,21 +108,62 @@ test('Returns Correct Value At Selected Index', () => {
   expect(list.valueAt(3)).toBe(carla2)
 })
 
-test('Index Check', () => {
+test('Correct Indices Pass Check', () => {
   expect(list._checkIndex(0)).toBe(true)
   expect(list._checkIndex(1)).toBe(true)
   expect(list._checkIndex(2)).toBe(true)
   expect(list._checkIndex(3)).toBe(true)
   expect(list._checkIndex(4)).toBe(true)
-  expect(list._checkIndex(1000)).toBe(true)
-  expect(list._checkIndex(4, true)).toBe(false)
-  expect(list._checkIndex(1000, true)).toBe(false)
-  expect(list._checkIndex(-1, true)).toBe(false)
-  expect(list._checkIndex(-1)).toBe(false)
-  expect(list._checkIndex('b')).toBe(false)
-  expect(list._checkIndex('b', true)).toBe(false)
-  expect(list._checkIndex(['a'])).toBe(false)
-  expect(list._checkIndex(['a'], true)).toBe(false)
-  expect(list._checkIndex({ 1: 'a' })).toBe(false)
-  expect(list._checkIndex({ 1: 'a' }, true)).toBe(false)
+  expect(list._checkIndex(1000000)).toBe(true)
+})
+
+test('Index Length Check Fails Indices', () => {
+  expect(() => {
+    list._checkIndex(4, true)
+  }).toThrow('That index is undefined')
+  expect(() => {
+    list._checkIndex(1000000, true)
+  }).toThrow('That index is undefined')
+})
+
+test('Negative Numbers Fail Index Check', () => {
+  expect(() => {
+    list._checkIndex(-1, true)
+  }).toThrow('Index must be a natural number (this includes 0)')
+  expect(() => {
+    list._checkIndex(-1)
+  }).toThrow('Index must be a natural number (this includes 0)')
+  expect(() => {
+    list._checkIndex(-1000000, true)
+  }).toThrow('Index must be a natural number (this includes 0)')
+  expect(() => {
+    list._checkIndex(-1000000)
+  }).toThrow('Index must be a natural number (this includes 0)')
+})
+
+test('Strings Fail Index Check', () => {
+  expect(() => {
+    list._checkIndex('b')
+  }).toThrow('Index must be a natural number (this includes 0)')
+  expect(() => {
+    list._checkIndex('b', true)
+  }).toThrow('Index must be a natural number (this includes 0)')
+})
+
+test('Arrays Fail Index Check', () => {
+  expect(() => {
+    list._checkIndex(['a'])
+  }).toThrow('Index must be a natural number (this includes 0)')
+  expect(() => {
+    list._checkIndex(['a'], true)
+  }).toThrow('Index must be a natural number (this includes 0)')
+})
+
+test('Objects Fail Index Check', () => {
+  expect(() => {
+    list._checkIndex({ 1: 'a' })
+  }).toThrow('Index must be a natural number (this includes 0)')
+  expect(() => {
+    list._checkIndex({ 1: 'a' }, true)
+  }).toThrow('Index must be a natural number (this includes 0)')
 })

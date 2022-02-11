@@ -6,16 +6,20 @@ class Node {
 }
 class LinkedList {
   constructor(input) {
-    if (arguments.length > 0) {
+    if (arguments.length === 1) {
       const inputIsArray = Array.isArray(input)
       if (inputIsArray) {
         this._createNewList()
         if (input.length > 0) {
           this._fillList(input)
         }
+      } else {
+        throw new Error('Input must be an array')
       }
-    } else {
+    } else if (arguments.length === 0) {
       this._createNewList()
+    } else {
+      throw new Error('Only one input allowed.')
     }
   }
   _fillList(array) {
@@ -42,21 +46,22 @@ class LinkedList {
       return isInteger && isNatural
     }
     if (indexIsNaturalNumber(index)) {
-      return checkLength ? index < this.length : true
+      console.log(!checkLength)
+      if (!checkLength || index < this.length) {
+        return true
+      }
+      throw new Error('That index is undefined')
     }
-    return false
+    throw new Error('Index must be a natural number (this includes 0)')
   }
   _nodeAt(index) {
-    if (this._checkIndex(index, true)) {
-      let node = this.head
-      let counter = 0
-      while (counter < index) {
-        node = node.next
-        counter++
-      }
-      return node
+    let node = this.head
+    let counter = 0
+    while (counter < index) {
+      node = node.next
+      counter++
     }
-    return undefined
+    return node
   }
   append(value) {
     const newNode = new Node(value, null)
@@ -91,15 +96,15 @@ class LinkedList {
       }
       return this.append(value)
     }
-    return undefined
   }
   remove(index) {
-    if (this._checkIndex(index, true)) {
+    if (this._checkIndex(index)) {
       if (index === 0) {
         const newHead = this.head.next
         delete this.head
         this.head = newHead
       } else {
+        index = index >= this.length ? this.length - 1 : index
         let node = this._nodeAt(index - 1)
         const newNext = node.next.next
         delete node.next
@@ -108,7 +113,6 @@ class LinkedList {
       this.length--
       return this
     }
-    return undefined
   }
   mutateValue(index, value) {
     if (this._checkIndex(index, true)) {
@@ -116,14 +120,12 @@ class LinkedList {
       node.value = value
       return this
     }
-    return undefined
   }
   valueAt(index) {
     if (this._checkIndex(index, true)) {
       let node = this._nodeAt(index)
       return node.value
     }
-    return undefined
   }
   asArray() {
     let node = this.head
@@ -154,5 +156,8 @@ class LinkedList {
     return hash
   }
 }
+const obj = {}
+const list = new LinkedList().insert(100, 4)
+console.log('INCORRECT INPUT', list == obj)
 
 module.exports = LinkedList
