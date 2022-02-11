@@ -15,6 +15,9 @@ const obj = {
   tail: { value: carla2, next: null },
   length: 4
 }
+function buildList(inp1, inp2 = null) {
+  return inp2 ? new LinkedList(inp1, inp2) : new LinkedList(inp1)
+}
 
 test('Properly Creates Linked List', () => {
   const testList = new LinkedList(['4'])
@@ -36,9 +39,21 @@ test('Properly Handles No Input', () => {
   expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
 })
 
-test('Properly Handles Multiple Inputs', () => {
+test('Properly Handles Multiple Inputs In Array Format', () => {
   const testList = new LinkedList(arr)
   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
+})
+
+test('Throws Error When Given Multiple Arguments', () => {
+  expect(() => {
+    buildList(arr, 7)
+  }).toThrow('One Input Maximum')
+})
+
+test('Throws Error When Argument Is Not Array', () => {
+  expect(() => {
+    buildList(7)
+  }).toThrow('Input Must Be An Array')
 })
 
 test('Properly Prepends Value', () => {
@@ -122,50 +137,50 @@ test('Correct Indices Pass Check', () => {
 test('Index Length Check Fails Indices', () => {
   expect(() => {
     list._checkIndex(4, true)
-  }).toThrow('That index is undefined')
+  }).toThrow('That Index Is Undefined')
   expect(() => {
     list._checkIndex(1000000, true)
-  }).toThrow('That index is undefined')
+  }).toThrow('That Index Is Undefined')
 })
 
 test('Negative Numbers Fail Index Check', () => {
   expect(() => {
     list._checkIndex(-1, true)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex(-1)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex(-1000000, true)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex(-1000000)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })
 
 test('Strings Fail Index Check', () => {
   expect(() => {
     list._checkIndex('b')
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex('b', true)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })
 
 test('Arrays Fail Index Check', () => {
   expect(() => {
     list._checkIndex(['a'])
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex(['a'], true)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })
 
 test('Objects Fail Index Check', () => {
   expect(() => {
     list._checkIndex({ 1: 'a' })
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex({ 1: 'a' }, true)
-  }).toThrow('Index must be a natural number (this includes 0)')
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })

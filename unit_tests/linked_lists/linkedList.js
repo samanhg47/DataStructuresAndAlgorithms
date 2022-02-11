@@ -14,12 +14,12 @@ class LinkedList {
           this._fillList(input)
         }
       } else {
-        throw new Error('Input must be an array')
+        throw new Error('Input Must Be An Array')
       }
     } else if (arguments.length === 0) {
       this._createNewList()
     } else {
-      throw new Error('Only one input allowed.')
+      throw new Error('One Input Maximum')
     }
   }
   _fillList(array) {
@@ -50,9 +50,9 @@ class LinkedList {
       if (!checkLength || index < this.length) {
         return true
       }
-      throw new Error('That index is undefined')
+      throw new Error('That Index Is Undefined')
     }
-    throw new Error('Index must be a natural number (this includes 0)')
+    throw new Error('Index Must Be A Natural Number (This Includes 0)')
   }
   _nodeAt(index) {
     let node = this.head
