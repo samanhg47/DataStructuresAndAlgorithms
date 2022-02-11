@@ -366,48 +366,80 @@ class Node{
   }
 }
 class LinkedList {
-  constructor(value) {
-    this.head = new Node(value, null)
+  constructor(input) {
+    if (arguments.length === 1) {
+      const inputIsArray = Array.isArray(input)
+      if (inputIsArray) {
+        this._createNewList()
+        if (input.length > 0) {
+          this._fillList(input)
+        }
+      } else {
+        throw new Error('Input Must Be An Array')
+      }
+    } else if (arguments.length === 0) {
+      this._createNewList()
+    } else {
+      throw new Error('One Input Maximum')
+    }
+  }
+  _fillList(array) {
+    this.head = new Node(array[0], null)
     this.tail = this.head
     this.length = 1
-  }
-  _checkIndex(index, bool = false) {
-    if (
-      typeof index === 'number' &&
-      index >= 0 &&
-      index === Math.floor(index)
-    ) {
-      if (bool) {
-        if (index < this.length) {
-          return true
-        }
-        return false
+    if (array.length > 1) {
+      let index = 1
+      while (index < array.length) {
+        this.append(array[index])
+        index++
       }
-      return true
     }
-    return false
+  }
+  _createNewList() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+  _checkIndex(index, checkLength = false) {
+    function indexIsNaturalNumber(i) {
+      const isInteger = Number.isInteger(i)
+      const isNatural = i >= 0
+      return isInteger && isNatural
+    }
+    if (indexIsNaturalNumber(index)) {
+      console.log(!checkLength)
+      if (!checkLength || index < this.length) {
+        return true
+      }
+      throw new Error('That Index Is Undefined')
+    }
+    throw new Error('Index Must Be A Natural Number (This Includes 0)')
   }
   _nodeAt(index) {
-    if (this._checkIndex(index, true)) {
-      let node = this.head
-      let counter = 0
-      while (counter < index) {
-        node = node.next
-        counter++
-      }
-      return node
+    let node = this.head
+    let counter = 0
+    while (counter < index) {
+      node = node.next
+      counter++
     }
-    return undefined
+    return node
   }
   append(value) {
     const newNode = new Node(value, null)
-    this.tail.next = newNode
+    if (this.length > 0) {
+      this.tail.next = newNode
+    } else {
+      this.head = newNode
+    }
     this.tail = newNode
     this.length++
     return this
   }
   prepend(value) {
     const newNode = new Node(value, this.head)
+    if (this.length === 0) {
+      this.tail = newNode
+    }
     this.head = newNode
     this.length++
     return this
@@ -425,27 +457,23 @@ class LinkedList {
       }
       return this.append(value)
     }
-    return undefined
   }
   remove(index) {
-    if (this._checkIndex(index, true)) {
-      let val
+    if (this._checkIndex(index)) {
       if (index === 0) {
         const newHead = this.head.next
-        val = this.head.value
         delete this.head
         this.head = newHead
       } else {
+        index = index >= this.length ? this.length - 1 : index
         let node = this._nodeAt(index - 1)
         const newNext = node.next.next
-        val = node.next.value
         delete node.next
         node.next = newNext
       }
       this.length--
       return this
     }
-    return undefined
   }
   mutateValue(index, value) {
     if (this._checkIndex(index, true)) {
@@ -453,14 +481,12 @@ class LinkedList {
       node.value = value
       return this
     }
-    return undefined
   }
   valueAt(index) {
     if (this._checkIndex(index, true)) {
       let node = this._nodeAt(index)
       return node.value
     }
-    return undefined
   }
   asArray() {
     let node = this.head
