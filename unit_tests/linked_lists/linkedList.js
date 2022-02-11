@@ -5,17 +5,41 @@ class Node {
   }
 }
 class LinkedList {
-  constructor(value) {
-    this.head = new Node(value, null)
+  constructor(input) {
+    if (arguments.length > 0) {
+      const inputIsArray = Array.isArray(input)
+      if (inputIsArray) {
+        this._createNewList()
+        if (input.length > 0) {
+          this._fillList(input)
+        }
+      }
+    } else {
+      this._createNewList()
+    }
+  }
+  _fillList(array) {
+    this.head = new Node(array[0], null)
     this.tail = this.head
     this.length = 1
+    if (array.length > 1) {
+      let index = 1
+      while (index < array.length) {
+        this.append(array[index])
+        index++
+      }
+    }
+  }
+  _createNewList() {
+    this.head = null
+    this.tail = null
+    this.length = 0
   }
   _checkIndex(index, checkLength = false) {
     function indexIsNaturalNumber(i) {
-      const isNumber = typeof i === 'number'
-      const isWholeNumber = i === Math.floor(i)
-      const isNaturalNumber = i >= 0
-      return isNumber && isWholeNumber && isNaturalNumber
+      const isInteger = Number.isInteger(i)
+      const isNatural = i >= 0
+      return isInteger && isNatural
     }
     if (indexIsNaturalNumber(index)) {
       return checkLength ? index < this.length : true
@@ -36,13 +60,20 @@ class LinkedList {
   }
   append(value) {
     const newNode = new Node(value, null)
-    this.tail.next = newNode
+    if (this.length > 0) {
+      this.tail.next = newNode
+    } else {
+      this.head = newNode
+    }
     this.tail = newNode
     this.length++
     return this
   }
   prepend(value) {
     const newNode = new Node(value, this.head)
+    if (this.length === 0) {
+      this.tail = newNode
+    }
     this.head = newNode
     this.length++
     return this
@@ -64,16 +95,13 @@ class LinkedList {
   }
   remove(index) {
     if (this._checkIndex(index, true)) {
-      let val
       if (index === 0) {
         const newHead = this.head.next
-        val = this.head.value
         delete this.head
         this.head = newHead
       } else {
         let node = this._nodeAt(index - 1)
         const newNext = node.next.next
-        val = node.next.value
         delete node.next
         node.next = newNext
       }

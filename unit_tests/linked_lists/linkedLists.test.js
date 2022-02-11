@@ -4,7 +4,7 @@ const carla = { name: 'Carla' }
 const carla2 = { name: 'Carla' }
 
 test('Properly Creates Linked List', () => {
-  const list = new LinkedList('4')
+  const list = new LinkedList(['4'])
   const obj = {
     head: { value: '4', next: null },
     tail: { value: '4', next: null },
@@ -14,7 +14,7 @@ test('Properly Creates Linked List', () => {
 })
 
 test('Properly Prepends Value', () => {
-  const list = new LinkedList('4').prepend(carla)
+  const list = new LinkedList(['4']).prepend(carla)
   const obj = {
     head: { value: carla, next: { value: '4', next: null } },
     tail: { value: '4', next: null },
@@ -24,7 +24,7 @@ test('Properly Prepends Value', () => {
 })
 
 test('Properly Appends Value', () => {
-  const list = new LinkedList('4').prepend(carla).append(carla2)
+  const list = new LinkedList(['4']).prepend(carla).append(carla2)
   const obj = {
     head: {
       value: carla,
@@ -49,12 +49,15 @@ const obj = {
 }
 
 test('Properly Inserts Value', () => {
-  const list = new LinkedList('4').prepend(carla).append(carla2).insert(2, 146)
+  const list = new LinkedList(['4'])
+    .prepend(carla)
+    .append(carla2)
+    .insert(2, 146)
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
 test('Properly Removes Value', () => {
-  const list = new LinkedList('4')
+  const list = new LinkedList(['4'])
     .prepend(carla)
     .append(carla2)
     .insert(2, { height: 4, width: 5 })
@@ -64,7 +67,7 @@ test('Properly Removes Value', () => {
 })
 
 test('Properly Mutates Values', () => {
-  const list = new LinkedList('4')
+  const list = new LinkedList(['4'])
     .prepend(carla)
     .append(carla2)
     .insert(2, { height: 4, width: 5 })
@@ -73,7 +76,7 @@ test('Properly Mutates Values', () => {
 })
 
 const arr = [carla, '4', 146, carla2]
-const list = new LinkedList('4').prepend(carla).append(carla2).insert(2, 146)
+const list = new LinkedList(['4']).prepend(carla).append(carla2).insert(2, 146)
 
 test('Properly Converts List To Array', () => {
   carla[3] = true
