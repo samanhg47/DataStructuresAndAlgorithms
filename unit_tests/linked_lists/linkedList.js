@@ -156,8 +156,5 @@ class LinkedList {
     return hash
   }
 }
-const obj = {}
-const list = new LinkedList().insert(100, 4)
-console.log('INCORRECT INPUT', list == obj)
 
 module.exports = LinkedList
