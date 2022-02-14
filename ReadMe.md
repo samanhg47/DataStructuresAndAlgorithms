@@ -407,7 +407,6 @@ class LinkedList {
       return isInteger && isNatural
     }
     if (indexIsNaturalNumber(index)) {
-      console.log(!checkLength)
       if (!checkLength || index < this.length) {
         return true
       }
