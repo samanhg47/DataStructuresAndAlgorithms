@@ -1,0 +1,23 @@
+{
+  "name": "DataStructuresAndAlgorithms",
+  "version": "1.0.0",
+  "description": "- [Big O](#bigO)   - [Data Structures](#ds)",
+  "main": "unitTest.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samanhg47/DataStructuresAndAlgorithms.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samanhg47/DataStructuresAndAlgorithms/issues"
+  },
+  "homepage": "https://github.com/samanhg47/DataStructuresAndAlgorithms#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
