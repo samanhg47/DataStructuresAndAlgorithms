@@ -39,6 +39,27 @@ class LinkedList {
     this.tail = null
     this.length = 0
   }
+  _insertAll(index, values) {
+    let node = this._nodeAt(index - 1)
+    let i = 0
+    let nodeCluster
+    let selectedNode
+    for (let value of values) {
+      if (i === 0) {
+        nodeCluster = new Node(value, null)
+        selectedNode = nodeCluster
+      } else {
+        selectedNode.next =
+          i != values.length - 1
+            ? new Node(value, null)
+            : new Node(value, node.next)
+        selectedNode = selectedNode.next
+      }
+      i++
+    }
+    node.next = nodeCluster
+    this.length += values.length
+  }
   _checkIndex(index, checkLength = false) {
     function indexIsNaturalNumber(i) {
       const isInteger = Number.isInteger(i)
@@ -62,7 +83,7 @@ class LinkedList {
     }
     return node
   }
-  append(value) {
+  appendOne(value) {
     const newNode = new Node(value, null)
     if (this.length > 0) {
       this.tail.next = newNode
@@ -73,7 +94,14 @@ class LinkedList {
     this.length++
     return this
   }
-  prepend(value) {
+  appendMany(values) {
+    for (let value of values) {
+      this.appendOne(value)
+    }
+    this.length += values.length
+    return this
+  }
+  prependOne(value) {
     const newNode = new Node(value, this.head)
     if (this.length === 0) {
       this.tail = newNode
@@ -82,10 +110,17 @@ class LinkedList {
     this.length++
     return this
   }
-  insert(index, value) {
+  prependMany(values) {
+    for (let i = values.length - 1; i > -1; i--) {
+      this.prependOne(values[i])
+    }
+    this.length += values.length
+    return this
+  }
+  insertOne(index, value) {
     if (this._checkIndex(index)) {
       if (index === 0) {
-        return this.prepend(value)
+        return this.prependOne(value)
       } else if (index < this.length) {
         let node = this._nodeAt(index - 1)
         const newNode = new Node(value, node.next)
@@ -93,7 +128,25 @@ class LinkedList {
         this.length++
         return this
       }
-      return this.append(value)
+      return this.appendOne(value)
+    }
+  }
+  insertMany(index, values) {
+    if (Array.isArray(values)) {
+      if (this._checkIndex(index)) {
+        if (index === 0) {
+          this.prependMany(values)
+        } else if (index < this.length - 1) {
+          this._insertAll(index, values)
+        } else {
+          this.appendMany(values)
+        }
+        return this
+      }
+    } else {
+      throw new Error(
+        'Values must be in their desired order as elements in an array'
+      )
     }
   }
   remove(index) {
@@ -117,7 +170,7 @@ class LinkedList {
     if (this._checkIndex(index, true)) {
       let node = this._nodeAt(index)
       node.value = value
-      return this
+      return node
     }
   }
   valueAt(index) {
