@@ -3,7 +3,10 @@ const LinkedList = require('./linkedList')
 const carla = { name: 'Carla' }
 const carla2 = { name: 'Carla' }
 const arr = [carla, '4', 146, carla2]
-const list = new LinkedList(['4']).prepend(carla).append(carla2).insert(2, 146)
+const list = new LinkedList(['4'])
+  .prependOne(carla)
+  .appendOne(carla2)
+  .insertOne(2, 146)
 const obj = {
   head: {
     value: carla,
@@ -57,7 +60,7 @@ test('Throws Error When Argument Is Not Array', () => {
 })
 
 test('Properly Prepends Value', () => {
-  const testList = new LinkedList(['4']).prepend(carla)
+  const testList = new LinkedList(['4']).prependOne(carla)
   const testObj = {
     head: { value: carla, next: { value: '4', next: null } },
     tail: { value: '4', next: null },
@@ -67,7 +70,7 @@ test('Properly Prepends Value', () => {
 })
 
 test('Properly Appends Value', () => {
-  const testList = new LinkedList(['4']).prepend(carla).append(carla2)
+  const testList = new LinkedList(['4']).prependOne(carla).appendOne(carla2)
   const testObj = {
     head: {
       value: carla,
@@ -81,28 +84,48 @@ test('Properly Appends Value', () => {
 
 test('Properly Inserts Value', () => {
   const testList = new LinkedList(['4'])
-    .prepend(carla)
-    .append(carla2)
-    .insert(2, 146)
+    .prependOne(carla)
+    .appendOne(carla2)
+    .insertOne(2, 146)
   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
 })
 
-test('Properly Removes Value', () => {
+test('Properly Removes Head', () => {
   const testList = new LinkedList(['4'])
-    .prepend(carla)
-    .append(carla2)
-    .insert(2, { height: 4, width: 5 })
-    .insert(2, 146)
+    .prependOne(carla)
+    .appendOne(carla2)
+    .insertOne(0, { height: 4, width: 5 })
+    .insertOne(3, 146)
+    .remove(0)
+  expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
+})
+
+test('Properly Removes Intermediate Value', () => {
+  const testList = new LinkedList(['4'])
+    .prependOne(carla)
+    .appendOne(carla2)
+    .insertOne(2, { height: 4, width: 5 })
+    .insertOne(2, 146)
     .remove(3)
   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
 })
 
-test('Properly Mutates Values', () => {
+test('Properly Removes Tail', () => {
   const testList = new LinkedList(['4'])
-    .prepend(carla)
-    .append(carla2)
-    .insert(2, { height: 4, width: 5 })
-    .mutateValue(2, 146)
+    .prependOne(carla)
+    .appendOne(carla2)
+    .insertOne(20, { height: 4, width: 5 })
+    .insertOne(2, 146)
+    .remove(21)
+  expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
+})
+
+test('Properly Changes Values', () => {
+  const testList = new LinkedList(['4'])
+    .prependOne(carla)
+    .appendOne(carla2)
+    .insertOne(2, { height: 4, width: 5 })
+    .changeValue(2, 146)
   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
 })
 
@@ -130,31 +153,31 @@ test('Correct Indices Pass Check', () => {
   expect(list._checkIndex(1)).toBe(true)
   expect(list._checkIndex(2)).toBe(true)
   expect(list._checkIndex(3)).toBe(true)
-  expect(list._checkIndex(4)).toBe(true)
-  expect(list._checkIndex(1000000)).toBe(true)
+  expect(list._checkIndex(4, false)).toBe(true)
+  expect(list._checkIndex(1000000, false)).toBe(true)
 })
 
 test('Index Length Check Fails Indices', () => {
   expect(() => {
-    list._checkIndex(4, true)
+    list._checkIndex(4)
   }).toThrow('That Index Is Undefined')
   expect(() => {
-    list._checkIndex(1000000, true)
+    list._checkIndex(1000000)
   }).toThrow('That Index Is Undefined')
 })
 
 test('Negative Numbers Fail Index Check', () => {
   expect(() => {
-    list._checkIndex(-1, true)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
-  expect(() => {
     list._checkIndex(-1)
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
-    list._checkIndex(-1000000, true)
+    list._checkIndex(-1, false)
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
     list._checkIndex(-1000000)
+  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  expect(() => {
+    list._checkIndex(-1000000, false)
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })
 
@@ -163,7 +186,7 @@ test('Strings Fail Index Check', () => {
     list._checkIndex('b')
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
-    list._checkIndex('b', true)
+    list._checkIndex('b', false)
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })
 
@@ -172,7 +195,7 @@ test('Arrays Fail Index Check', () => {
     list._checkIndex(['a'])
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
-    list._checkIndex(['a'], true)
+    list._checkIndex(['a'], false)
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })
 
@@ -181,6 +204,6 @@ test('Objects Fail Index Check', () => {
     list._checkIndex({ 1: 'a' })
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
   expect(() => {
-    list._checkIndex({ 1: 'a' }, true)
+    list._checkIndex({ 1: 'a' }, false)
   }).toThrow('Index Must Be A Natural Number (This Includes 0)')
 })

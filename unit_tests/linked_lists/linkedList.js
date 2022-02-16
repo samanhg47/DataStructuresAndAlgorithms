@@ -1,3 +1,8 @@
+function isNaturalNumber(num) {
+  const isInteger = Number.isInteger(num)
+  const isNatural = num >= 0
+  return isInteger && isNatural
+}
 class Node {
   constructor(value, next) {
     this.value = value
@@ -22,6 +27,11 @@ class LinkedList {
       throw new Error('One Input Maximum')
     }
   }
+  _createNewList() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
   _fillList(array) {
     this.head = new Node(array[0], null)
     this.tail = this.head
@@ -29,50 +39,28 @@ class LinkedList {
     if (array.length > 1) {
       let index = 1
       while (index < array.length) {
-        this.append(array[index])
+        this.appendOne(array[index])
         index++
       }
     }
   }
-  _createNewList() {
-    this.head = null
-    this.tail = null
-    this.length = 0
-  }
-  _insertAll(index, values) {
-    let node = this._nodeAt(index - 1)
-    let i = 0
-    let nodeCluster
-    let selectedNode
-    for (let value of values) {
-      if (i === 0) {
-        nodeCluster = new Node(value, null)
-        selectedNode = nodeCluster
-      } else {
-        selectedNode.next =
-          i != values.length - 1
-            ? new Node(value, null)
-            : new Node(value, node.next)
-        selectedNode = selectedNode.next
-      }
-      i++
-    }
-    node.next = nodeCluster
-    this.length += values.length
-  }
-  _checkIndex(index, checkLength = false) {
-    function indexIsNaturalNumber(i) {
-      const isInteger = Number.isInteger(i)
-      const isNatural = i >= 0
-      return isInteger && isNatural
-    }
-    if (indexIsNaturalNumber(index)) {
+  _checkIndex(index, checkLength = true) {
+    if (isNaturalNumber(index)) {
       if (!checkLength || index < this.length) {
         return true
       }
       throw new Error('That Index Is Undefined')
     }
     throw new Error('Index Must Be A Natural Number (This Includes 0)')
+  }
+  checkIndex(index, checkLength = true) {
+    if (isNaturalNumber(index)) {
+      if (!checkLength || index < this.length) {
+        return true
+      }
+      return false
+    }
+    return false
   }
   _nodeAt(index) {
     let node = this.head
@@ -118,7 +106,7 @@ class LinkedList {
     return this
   }
   insertOne(index, value) {
-    if (this._checkIndex(index)) {
+    if (this._checkIndex(index, false)) {
       if (index === 0) {
         return this.prependOne(value)
       } else if (index < this.length) {
@@ -133,11 +121,15 @@ class LinkedList {
   }
   insertMany(index, values) {
     if (Array.isArray(values)) {
-      if (this._checkIndex(index)) {
+      if (this._checkIndex(index, false)) {
         if (index === 0) {
           this.prependMany(values)
         } else if (index < this.length - 1) {
-          this._insertAll(index, values)
+          const node = this._nodeAt(index - 1)
+          values.push(node.next)
+          const nodeCluster = new LinkedList(values)
+          node.next = nodeCluster.head
+          this.length += values.length
         } else {
           this.appendMany(values)
         }
@@ -150,34 +142,54 @@ class LinkedList {
     }
   }
   remove(index) {
-    if (this._checkIndex(index)) {
+    if (this._checkIndex(index, false)) {
       if (index === 0) {
         const newHead = this.head.next
-        delete this.head
         this.head = newHead
       } else {
-        index = index >= this.length ? this.length - 1 : index
-        let node = this._nodeAt(index - 1)
-        const newNext = node.next.next
-        delete node.next
-        node.next = newNext
+        let node
+        if (index >= this.length - 1) {
+          index = this.length - 1
+          node = this._nodeAt(index - 1)
+          const newNext = node.next.next
+          node.next = newNext
+          this.tail = node
+        } else {
+          node = this._nodeAt(index - 1)
+          const newNext = node.next.next
+          node.next = newNext
+        }
       }
       this.length--
       return this
     }
   }
-  mutateValue(index, value) {
-    if (this._checkIndex(index, true)) {
+  changeValue(index, value) {
+    if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       node.value = value
-      return node
+      return this
     }
   }
   valueAt(index) {
-    if (this._checkIndex(index, true)) {
+    if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       return node.value
     }
+  }
+  indexOf(value) {
+    let node = this.head
+    let counter = 0
+    let index
+    while (index === undefined || counter < this.length) {
+      node.value === value && (index = counter)
+      node = node.next
+      counter++
+    }
+    if (index !== undefined) {
+      return index
+    }
+    throw new Error('Value does not exist within list')
   }
   asArray() {
     let node = this.head

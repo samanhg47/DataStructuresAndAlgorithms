@@ -356,9 +356,22 @@ Linked list are composed of two-part nodes. The first part or element in a node 
 - *Access:* O(n)
 
 
-Because Javascript is my base language and it doesn't come out of the box with an object for linked lists, I've included a pretty good model below which we will break down piece by piece.
+Because Javascript is my base language and it doesn't come out of the box with an object for linked lists, I've included a pretty good model below. Below that, I break down the functions that are critical to it working like it's supposed to.
+
+### Critical Functions
+- [Node Class](#nodeClass)
+- [Linked List Constructor](#LLConstructor)
+- [LinkedList.appendOne()](#LLAppendOne)
+- [LinkedList.prependOne()](#LLPrependOne)
+- [LinkedList.insertOne(index, value)](#LLInsertOne)
+- [LinkedList.remove(index)](#LLRemove)
 
 ```js
+function isNaturalNumber(num) {
+  const isInteger = Number.isInteger(num)
+  const isNatural = num >= 0
+  return isInteger && isNatural
+}
 class Node{
 	constructor(value, next){
   	this.value = value
@@ -383,6 +396,11 @@ class LinkedList {
       throw new Error('One Input Maximum')
     }
   }
+  _createNewList() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
   _fillList(array) {
     this.head = new Node(array[0], null)
     this.tail = this.head
@@ -390,29 +408,28 @@ class LinkedList {
     if (array.length > 1) {
       let index = 1
       while (index < array.length) {
-        this.append(array[index])
+        this.appendOne(array[index])
         index++
       }
     }
   }
-  _createNewList() {
-    this.head = null
-    this.tail = null
-    this.length = 0
-  }
-  _checkIndex(index, checkLength = false) {
-    function indexIsNaturalNumber(i) {
-      const isInteger = Number.isInteger(i)
-      const isNatural = i >= 0
-      return isInteger && isNatural
-    }
-    if (indexIsNaturalNumber(index)) {
+  _checkIndex(index, checkLength = true) {
+    if (isNaturalNumber(index)) {
       if (!checkLength || index < this.length) {
         return true
       }
       throw new Error('That Index Is Undefined')
     }
     throw new Error('Index Must Be A Natural Number (This Includes 0)')
+  }
+  checkIndex(index, checkLength = true) {
+    if (isNaturalNumber(index)) {
+      if (!checkLength || index < this.length) {
+        return true
+      }
+      return false
+    }
+    return false
   }
   _nodeAt(index) {
     let node = this.head
@@ -423,7 +440,7 @@ class LinkedList {
     }
     return node
   }
-  append(value) {
+  appendOne(value) {
     const newNode = new Node(value, null)
     if (this.length > 0) {
       this.tail.next = newNode
@@ -434,7 +451,14 @@ class LinkedList {
     this.length++
     return this
   }
-  prepend(value) {
+  appendMany(values) {
+    for (let value of values) {
+      this.appendOne(value)
+    }
+    this.length += values.length
+    return this
+  }
+  prependOne(value) {
     const newNode = new Node(value, this.head)
     if (this.length === 0) {
       this.tail = newNode
@@ -443,10 +467,17 @@ class LinkedList {
     this.length++
     return this
   }
-  insert(index, value) {
-    if (this._checkIndex(index)) {
+  prependMany(values) {
+    for (let i = values.length - 1; i > -1; i--) {
+      this.prependOne(values[i])
+    }
+    this.length += values.length
+    return this
+  }
+  insertOne(index, value) {
+    if (this._checkIndex(index, false)) {
       if (index === 0) {
-        return this.prepend(value)
+        return this.prependOne(value)
       } else if (index < this.length) {
         let node = this._nodeAt(index - 1)
         const newNode = new Node(value, node.next)
@@ -454,11 +485,33 @@ class LinkedList {
         this.length++
         return this
       }
-      return this.append(value)
+      return this.appendOne(value)
+    }
+  }
+  insertMany(index, values) {
+    if (Array.isArray(values)) {
+      if (this._checkIndex(index, false)) {
+        if (index === 0) {
+          this.prependMany(values)
+        } else if (index < this.length - 1) {
+          const node = this._nodeAt(index - 1)
+          values.push(node.next)
+          const nodeCluster = new LinkedList(values)
+          node.next = nodeCluster.head
+          this.length += values.length
+        } else {
+          this.appendMany(values)
+        }
+        return this
+      }
+    } else {
+      throw new Error(
+        'Values must be in their desired order as elements in an array'
+      )
     }
   }
   remove(index) {
-    if (this._checkIndex(index)) {
+    if (this._checkIndex(index, false)) {
       if (index === 0) {
         const newHead = this.head.next
         delete this.head
@@ -474,18 +527,32 @@ class LinkedList {
       return this
     }
   }
-  mutateValue(index, value) {
-    if (this._checkIndex(index, true)) {
+  changeValue(index, value) {
+    if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       node.value = value
       return this
     }
   }
   valueAt(index) {
-    if (this._checkIndex(index, true)) {
+    if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       return node.value
     }
+  }
+  indexOf(value) {
+    let node = this.head
+    let counter = 0
+    let index
+    while (index === undefined || counter < this.length) {
+      node.value === value && (index = counter)
+      node = node.next
+      counter++
+    }
+    if (index !== undefined) {
+      return index
+    }
+    throw new Error('Value does not exist within list')
   }
   asArray() {
     let node = this.head
@@ -518,41 +585,145 @@ class LinkedList {
 }
 ```
 
-### **Node Class**
+<h3 id='nodeClass'><b>Node Class</b></h3>
+
+```js
+class Node{
+	constructor(value, next){
+  	this.value = value
+    this.next = next
+  }
+}
+```
 
 To learn about linked lists we first need to learn what nodes are. A node is a data point within a linked list comprised of two things, a value and a pointer. A value is pretty self-explanatory, it's the value stored within the node. The pointer is basically the address of the next node within the linked list. It tells the machine where in its memory bank to search for the next node, holding the next value; thus creating the links of our list. As a fan of object-oriented programming, I've created a class for our nodes so that we don't have to keep rewriting the same block of code every time we want to create a new node. For ease of use, it takes in two parameters, the value to be held within the node and the "address" of the next node. Linked lists  are  null-terminated, which means that the last node in our links list must have a pointer which points to a `null` value.
 
-### **Linked List Constructor**
-
-In the constructor function for our link to list you can see that, initially, Our head and tail are given the same value and the pointer for said value is null. The head of a linked list is the first Noel with in that list. The tail of a linked list is the last value within that list. As we previously went over, the tail of a linked list will always point to a null value. Knowing this, it becomes clear why our head and tail must have the same value, as there is only one value in our linked list. The length is self-explanatory. There is only one node thus the length is one.
-
-### **LinkedList.append()**
+<h3 id='LLConstructor'><b>Linked List Constructor</b></h3>
 
 ```js
-append(value){
-	this.addValue(value)
-  const newNode = new Node(value, null)
-  this.tail.next = newNode
-  this.tail = newNode    
-  this.length ++
-  return this
+constructor(input) {
+  if (arguments.length === 1) {
+    const inputIsArray = Array.isArray(input)
+    if (inputIsArray) {
+      this._createNewList()
+      if (input.length > 0) {
+        this._fillList(input)
+      }
+    } else {
+      throw new Error('Input Must Be An Array')
+    }
+  } else if (arguments.length === 0) {
+    this._createNewList()
+  } else {
+    throw new Error('One Input Maximum')
+  }
+}
+_createNewList() {
+  this.head = null
+  this.tail = null
+  this.length = 0
+}
+_fillList(array) {
+  this.head = new Node(array[0], null)
+  this.tail = this.head
+  this.length = 1
+  if (array.length > 1) {
+    let index = 1
+    while (index < array.length) {
+      this.appendOne(array[index])
+      index++
+    }
+  }
 }
 ```
 
-First, new value is add to our `this.set` object to preserve its accuracy. Next we create a new `Node` object with a value of our parameter and and a pointer directing us to null as this new node will become the tail of our linked list. We then replace the null value that our current tail is pointing to with the new node we just created, as it will now be the second to last node. After that we will replace the tail with our new node. This doesn't delete the node that used to be the tail because remember, the node before it is still holding it's "address" as the value of it's `next` key/value pair. Lastly we increment the length of our list to preserve its accuracy.
+ The constructor function  of our linked list will do different things depending on the input. This function is designed to handle one input in the form of an array. If no input is given, an empty linked list will be created where the head and tail are both null values and the length is zero. If more than one input is given or the input given is not an array an error will be thrown. If the correct input is given, a function will run that fills the list with the elements of the array in the order in which they appear (i.e. the first element will be the value stored at the head, the second element will be the value stored at the second node in the list, and so on).
 
-### **LinkedList.prepend()**
+<h3 id='LLAppendOne'><b>LinkedList.appendOne()</b></h3>
 
 ```js
-prepend(value){
-	this.addValue(value)
-	const newNode = new Node(value, this.head)
-  this.head = newNode
-  this.length ++
-  return this
+appendOne(value) {
+    const newNode = new Node(value, null)
+    if (this.length > 0) {
+      this.tail.next = newNode
+    } else {
+      this.head = newNode
+    }
+    this.tail = newNode
+    this.length++
+    return this
+  }
+```
+
+First, we create a new `Node` object with a value of our parameter and and a pointer directing us to null as this new node will become the tail of our linked list. We then set a conditional to determine whether or not the list is empty. If it is empty, we set this new node as the tail and the head of our list as there is only one node at this time. If it's not empty, we replace the null value that our current tail is pointing to with the new node we just created, as it will now be the second to last node. After that we will replace the tail with our new node. This doesn't delete the node that used to be the tail because remember, the node before it is still holding it's "address" as the value of it's `next` key/value pair. Lastly we increment the length of our list to preserve its accuracy.
+
+<h3 id='LLPrependOne'><b>LinkedList.prependOne()</b></h3>
+
+```js
+prependOne(value) {
+    const newNode = new Node(value, this.head)
+    if (this.length === 0) {
+      this.tail = newNode
+    }
+    this.head = newNode
+    this.length++
+    return this
+  }
+```
+
+Prepending is pretty similar. We first create a new `node` object, in which we store the value we want and a pointer to the object that used to be the head. Next, we set this new node pointing to the old head as the new head. Lastly, we increment the size to keep an accurate record. If the list is empty we also need to set our new head as the tail.
+
+<h3 id='LLInsertOne'><b>LinkedList.insertOne(index, value)</b></h3>
+
+```js
+insertOne(index, value) {
+  if (this._checkIndex(index, false)) {
+    if (index === 0) {
+      return this.prependOne(value)
+    } else if (index < this.length) {
+      let node = this._nodeAt(index - 1)
+      const newNode = new Node(value, node.next)
+      node.next = newNode
+      this.length++
+      return this
+    }
+    return this.appendOne(value)
+  }
 }
 ```
 
-Prepending is pretty similar. We first add the new value to our set, so as to keep an accurate record of the values within our list. We then create a new `node` object, in which we store the value we want an a pointer to the object that used to be the head. Next, we set this new node pointing to the old head as the new head. Lastly, we increment the size to keep an accurate record.
+  to insert a node into our link to list we must provide the function with and the index at ways to insert said no and the value to be stored there. The first thing this function will do is  check that the index is in fact a natural number. Once the index is verified, if the index is zero we simply need to prepend the value. If the index points to the last note in our list or greater, we simply need to append the value. In all other cases, we iterate into our list until we reach the node before the given index and save that node to a variable. Once we have that node, We create a new note with the  value that was given to us as an argument which points To what the saved node used to point to. Now we make the saved node point to our new node, increment the length of our list, and c'est fin.
 
-### **LinkedList.set**
+<h3 id='LLRemove'><b>LinkedList.remove(index)</b></h3>
+
+```js
+remove(index) {
+  if (this._checkIndex(index, false)) {
+    if (index === 0) {
+      const newHead = this.head.next
+      this.head = newHead
+    } else {
+      let node
+      if (index >= this.length - 1) {
+        index = this.length - 1
+        node = this._nodeAt(index - 1)
+        const newNext = node.next.next
+        node.next = newNext
+        this.tail = node
+      } else {
+        node = this._nodeAt(index - 1)
+        const newNext = node.next.next
+        node.next = newNext
+      }
+    }
+    this.length--
+    return this
+  }
+}
+```
+
+ To remove a node from our list, we call a function that intakes the index and which the node resides. We again check that the node is a natural number. Once the node is checked we can begin the process of removing the node.  if the index given is zero, we simply save the known that the head of our list points to as a variable. We then delete the head of our list. After that we assign the node that we saved to a variable as the new head of our linked list. If the index is greater than zero,  we simply create a variable called `node` and save the node before the given index to that variable. We then save  what the node at the given index points to to a variable called `newNext`. Finally, we make the node at our `node` variable point to our `newNext`. If the index given is pointing to the tail or greater, that simply adds a step to the beginning and end of our process. At the beginning of a process we now reassign our index to equal the length of our list minus one. At the end of our process we reassign the tail to equal our `node` variable.
+
+<h3 id='LLFinalNote'><b>Final Note</b></h3>
+
+ now that you understand what a linked list is and the basic functions necessary to make it work correctly, I encourage you to look over the rest of the clothes that creates the links list class that I've written. Try to come to your own understanding of the reasoning behind certain functions and their processes. If you want to take it a step further, re-write the functions in your own words. Good luck!
