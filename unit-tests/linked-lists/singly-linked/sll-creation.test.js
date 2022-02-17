@@ -1,25 +1,15 @@
-const LinkedList = require('./sll')
-const carla = { name: 'Carla' }
-const carla2 = { name: 'Carla' }
-const arr = [carla, '4', 146, carla2]
-const obj = {
-  head: {
-    value: carla,
-    next: {
-      value: '4',
-      next: { value: 146, next: { value: carla2, next: null } }
-    }
-  },
-  tail: { value: carla2, next: null },
-  length: 4
-}
-function buildList(inp1, inp2 = null) {
-  return inp2 ? new LinkedList(inp1, inp2) : new LinkedList(inp1)
-}
+const {
+  LinkedList,
+  carla,
+  carla2,
+  obj,
+  list,
+  arr,
+  buildList
+} = require('./sll')
 
 /**
  * @group LinkedLists
- * @group sll
  * @group sll/creation
  */
 

@@ -1,33 +1,12 @@
-const LinkedList = require('./sll')
-const carla = { name: 'Carla' }
-const carla2 = { name: 'Carla' }
-const arr = [carla, '4', 146, carla2]
-const list = new LinkedList(['4'])
-  .prependOne(carla)
-  .appendOne(carla2)
-  .insertOne(2, 146)
-const obj = {
-  head: {
-    value: carla,
-    next: {
-      value: '4',
-      next: { value: 146, next: { value: carla2, next: null } }
-    }
-  },
-  tail: { value: carla2, next: null },
-  length: 4
-}
-function buildList(inp1, inp2 = null) {
-  return inp2 ? new LinkedList(inp1, inp2) : new LinkedList(inp1)
-}
-
-test('Properly Inserts Value', () => {
-  const testList = new LinkedList(['4'])
-    .prependOne(carla)
-    .appendOne(carla2)
-    .insertOne(2, 146)
-  expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
-})
+const {
+  LinkedList,
+  carla,
+  carla2,
+  obj,
+  list,
+  arr,
+  buildList
+} = require('./sll')
 
 test('Properly Removes Head', () => {
   const testList = new LinkedList(['4'])
@@ -73,11 +52,12 @@ test('Properly Converts List To Array', () => {
 })
 
 test('Properly Converts List To Hash Table', () => {
-  expect(JSON.stringify([...list.hashed().keys()])).toBe(JSON.stringify(arr))
-  expect(list.hashed().get(carla)).toBe(1)
-  expect(list.hashed().get(carla2)).toBe(1)
-  expect(list.hashed().get(146)).toBe(1)
-  expect(list.hashed().get('4')).toBe(1)
+  const hashed = list.hashed()
+  expect(JSON.stringify([...hashed.keys()])).toBe(JSON.stringify(arr))
+  expect(hashed.get(carla)).toBe(1)
+  expect(hashed.get(carla2)).toBe(1)
+  expect(hashed.get(146)).toBe(1)
+  expect(hashed.get('4')).toBe(1)
 })
 
 test('Returns Correct Value At Selected Index', () => {

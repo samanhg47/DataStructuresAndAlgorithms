@@ -39,7 +39,7 @@ class LinkedList {
     if (array.length > 1) {
       let index = 1
       while (index < array.length) {
-        this.appendOne(array[index])
+        this._append(array[index])
         index++
       }
     }
@@ -71,7 +71,7 @@ class LinkedList {
     }
     return node
   }
-  appendOne(value) {
+  _append(value) {
     const newNode = new Node(value, null)
     if (this.length > 0) {
       this.tail.next = newNode
@@ -80,56 +80,58 @@ class LinkedList {
     }
     this.tail = newNode
     this.length++
-    return this
   }
-  appendMany(values) {
-    for (let value of values) {
-      this.appendOne(value)
+  append(values) {
+    if (Array.isArray(values)) {
+      for (let value of values) {
+        this._append(value)
+      }
+      return this
+    } else {
+      throw new Error(
+        'Values must be in their desired order as elements in an array'
+      )
     }
-    return this
   }
-  prependOne(value) {
+  _prepend(value) {
     const newNode = new Node(value, this.head)
     if (this.length === 0) {
       this.tail = newNode
     }
     this.head = newNode
     this.length++
-    return this
   }
-  prependMany(values) {
-    for (let i = values.length - 1; i > -1; i--) {
-      this.prependOne(values[i])
-    }
-    return this
-  }
-  insertOne(index, value) {
-    if (this._checkIndex(index, false)) {
-      if (index === 0) {
-        return this.prependOne(value)
-      } else if (index < this.length) {
-        let node = this._nodeAt(index - 1)
-        const newNode = new Node(value, node.next)
-        node.next = newNode
-        this.length++
-        return this
+  prepend(values) {
+    if (Array.isArray(values)) {
+      for (let i = values.length - 1; i > -1; i--) {
+        this._prepend(values[i])
       }
-      return this.appendOne(value)
+      return this
+    } else {
+      throw new Error(
+        'Values must be in their desired order as elements in an array'
+      )
     }
   }
-  insertMany(index, values) {
+  _insert(index, value) {
+    let node = this._nodeAt(index - 1)
+    const newNode = new Node(value, node.next)
+    node.next = newNode
+    this.length++
+  }
+  insert(index, values) {
     if (Array.isArray(values)) {
       if (this._checkIndex(index, false)) {
         if (index === 0) {
-          this.prependMany(values)
-        } else if (index < this.length - 1) {
-          const node = this._nodeAt(index - 1)
-          values.push(node.next)
-          const nodeCluster = new LinkedList(values)
-          node.next = nodeCluster.head
-          this.length += values.length
+          this.prepend(values)
+        } else if (index < this.length) {
+          let currentIndex = index
+          for (const value of values) {
+            this._insert(currentIndex, value)
+            currentIndex++
+          }
         } else {
-          this.appendMany(values)
+          this.append(values)
         }
         return this
       }
@@ -219,4 +221,34 @@ class LinkedList {
   }
 }
 
-module.exports = LinkedList
+const carla = { name: 'Carla' }
+const carla2 = { name: 'Carla' }
+const arr = [carla, '4', 146, carla2]
+const list = new LinkedList(['4'])
+  .prepend([carla])
+  .append([carla2])
+  .insert(2, [146])
+const obj = {
+  head: {
+    value: carla,
+    next: {
+      value: '4',
+      next: { value: 146, next: { value: carla2, next: null } }
+    }
+  },
+  tail: { value: carla2, next: null },
+  length: 4
+}
+function buildList(inp1, inp2 = null) {
+  return inp2 ? new LinkedList(inp1, inp2) : new LinkedList(inp1)
+}
+
+module.exports = {
+  LinkedList,
+  carla,
+  carla2,
+  arr,
+  list,
+  obj,
+  buildList
+}
