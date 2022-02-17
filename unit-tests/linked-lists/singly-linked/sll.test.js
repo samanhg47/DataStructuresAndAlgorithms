@@ -1,5 +1,4 @@
-const LinkedList = require('./linkedList')
-
+const LinkedList = require('./sll')
 const carla = { name: 'Carla' }
 const carla2 = { name: 'Carla' }
 const arr = [carla, '4', 146, carla2]
@@ -21,53 +20,6 @@ const obj = {
 function buildList(inp1, inp2 = null) {
   return inp2 ? new LinkedList(inp1, inp2) : new LinkedList(inp1)
 }
-
-test('Properly Creates Linked List', () => {
-  const testList = new LinkedList(['4'])
-  const testObj = {
-    head: { value: '4', next: null },
-    tail: { value: '4', next: null },
-    length: 1
-  }
-  expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
-})
-
-test('Properly Handles No Input', () => {
-  const testList = new LinkedList()
-  const testObj = {
-    head: null,
-    tail: null,
-    length: 0
-  }
-  expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
-})
-
-test('Properly Handles Multiple Inputs In Array Format', () => {
-  const testList = new LinkedList(arr)
-  expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
-})
-
-test('Throws Error When Given Multiple Arguments', () => {
-  expect(() => {
-    buildList(arr, 7)
-  }).toThrow('One Input Maximum')
-})
-
-test('Throws Error When Argument Is Not Array', () => {
-  expect(() => {
-    buildList(7)
-  }).toThrow('Input Must Be An Array')
-})
-
-test('Properly Prepends Value', () => {
-  const testList = new LinkedList(['4']).prependOne(carla)
-  const testObj = {
-    head: { value: carla, next: { value: '4', next: null } },
-    tail: { value: '4', next: null },
-    length: 2
-  }
-  expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
-})
 
 test('Properly Appends Value', () => {
   const testList = new LinkedList(['4']).prependOne(carla).appendOne(carla2)

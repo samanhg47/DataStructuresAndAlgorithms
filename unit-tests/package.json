@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/samanhg47/DataStructuresAndAlgorithms#readme",
   "devDependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "jest-runner-groups": "^2.1.0"
+  },
+  "jest": {
+    "runner": "groups"
   }
 }

@@ -86,7 +86,6 @@ class LinkedList {
     for (let value of values) {
       this.appendOne(value)
     }
-    this.length += values.length
     return this
   }
   prependOne(value) {
@@ -102,7 +101,6 @@ class LinkedList {
     for (let i = values.length - 1; i > -1; i--) {
       this.prependOne(values[i])
     }
-    this.length += values.length
     return this
   }
   insertOne(index, value) {
