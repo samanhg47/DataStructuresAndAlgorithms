@@ -21,19 +21,6 @@ function buildList(inp1, inp2 = null) {
   return inp2 ? new LinkedList(inp1, inp2) : new LinkedList(inp1)
 }
 
-test('Properly Appends Value', () => {
-  const testList = new LinkedList(['4']).prependOne(carla).appendOne(carla2)
-  const testObj = {
-    head: {
-      value: carla,
-      next: { value: '4', next: { value: carla2, next: null } }
-    },
-    tail: { value: carla2, next: null },
-    length: 3
-  }
-  expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
-})
-
 test('Properly Inserts Value', () => {
   const testList = new LinkedList(['4'])
     .prependOne(carla)

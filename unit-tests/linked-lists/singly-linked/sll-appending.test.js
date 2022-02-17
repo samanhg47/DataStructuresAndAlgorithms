@@ -16,11 +16,11 @@ const obj = {
 /**
  * @group LinkedLists
  * @group sll
- * @group sll/prepending
+ * @group sll/appending
  */
 
-test('Properly Prepends Single Value To Empty List', () => {
-  const testList = new LinkedList().prependOne('4')
+test('Properly Appepends Single Value To Empty List', () => {
+  const testList = new LinkedList().appendOne('4')
   const testObj = {
     head: { value: '4', next: null },
     tail: { value: '4', next: null },
@@ -29,8 +29,8 @@ test('Properly Prepends Single Value To Empty List', () => {
   expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
 })
 
-test('Properly Prepends Single Value To Filled List', () => {
-  const testList = new LinkedList(['4']).prependOne(carla)
+test('Properly Appepends Single Value To Filled List', () => {
+  const testList = new LinkedList([carla]).appendOne('4')
   const testObj = {
     head: { value: carla, next: { value: '4', next: null } },
     tail: { value: '4', next: null },
@@ -39,12 +39,12 @@ test('Properly Prepends Single Value To Filled List', () => {
   expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
 })
 
-test('Properly Prepends Multiple Values To Empty List', () => {
-  const testList = new LinkedList().prependMany([carla, '4', 146, carla2])
+test('Properly Appepends Multiple Values To Empty List', () => {
+  const testList = new LinkedList().appendMany([carla, '4', 146, carla2])
   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
 })
 
-test('Properly Prepends Multiple Values To Filled List', () => {
-  const testList = new LinkedList([carla2]).prependMany([carla, '4', 146])
+test('Properly Appepends Multiple Values To Filled List', () => {
+  const testList = new LinkedList([carla]).appendMany(['4', 146, carla2])
   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
 })
