@@ -183,24 +183,15 @@ class LinkedList {
       this._createNewList()
       return this
     }
-    let node1 = this._nodeAt(index1 - 1)
+    const node1 = this._nodeAt(index1 - 1)
+    const node2 = this._nodeAt(index2)
     if (index1 === this._lastIndex() || index2 === this.length) {
       node1.next = null
       this.tail = node1
     } else if (index1 === 0) {
-      let node2 = this._nodeAt(index1)
-      while (difference > 0) {
-        node2 = node2.next
-        difference--
-      }
       this.head = node2
     } else {
-      let node2 = node1
-      while (difference > 0) {
-        node2 = node2.next
-        difference--
-      }
-      node1.next = node2.next
+      node1.next = node2
     }
     this.length = newLength
     return this

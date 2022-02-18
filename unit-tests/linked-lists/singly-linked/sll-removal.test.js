@@ -33,9 +33,19 @@ test('Properly Removes Multiple Values At Head', () => {
 })
 
 // Removes One Intermediate Value
-test('Properly Removes Intermediate Value', () => {
+test('Properly Removes One Intermediate Value', () => {
   list.insert(2, [{ height: 4, width: 5 }])
   list.remove(2)
+  expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
+  list.insert(1, [{ height: 4, width: 5 }])
+  list.remove(1)
+  expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
+})
+
+// Removes Multiple Intermediate Values
+test('Properly Removes Multiple Intermediate Values', () => {
+  list.insert(1, [{ height: 4, width: 5 }, arr])
+  list.remove(1, 3)
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
