@@ -32,15 +32,12 @@ test('Properly Removes Multiple Values At Head', () => {
   )
 })
 
-// test('Properly Removes Intermediate Value', () => {
-//   const testList = new LinkedList(['4'])
-//     .prepend([carla])
-//     .append([carla2])
-//     .insert(2, [{ height: 4, width: 5 }])
-//     .insert(2, [146])
-//     .remove(3)
-//   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
-// })
+// Removes One Intermediate Value
+test('Properly Removes Intermediate Value', () => {
+  list.insert(2, [{ height: 4, width: 5 }])
+  list.remove(2)
+  expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
+})
 
 // Removes One At Tail
 test('Properly Removes One Value at Tail (Index1 = lastIndex)', () => {

@@ -183,23 +183,27 @@ class LinkedList {
       this._createNewList()
       return this
     }
-    let node = this._nodeAt(index1 - 1)
+    let node1 = this._nodeAt(index1 - 1)
     if (index1 === this._lastIndex() || index2 === this.length) {
-      node.next = null
-      this.tail = node
-      this.length = newLength
-      return this
-    }
-    if (index1 === 0) {
-      node = this._nodeAt(index1)
+      node1.next = null
+      this.tail = node1
+    } else if (index1 === 0) {
+      let node2 = this._nodeAt(index1)
       while (difference > 0) {
-        node = node.next
+        node2 = node2.next
         difference--
       }
-      this.head = node
-      this.length = newLength
-      return this
+      this.head = node2
+    } else {
+      let node2 = node1
+      while (difference > 0) {
+        node2 = node2.next
+        difference--
+      }
+      node1.next = node2.next
     }
+    this.length = newLength
+    return this
   }
   remove(index1, index2 = index1 + 1) {
     if (this._checkIndex(index1, false)) {
