@@ -23,6 +23,15 @@ test('Properly Removes One Value At Head (Index1 = 0, Index2 = 1)', () => {
   expect(JSON.stringify(list)).toBe(JSON.stringify(obj))
 })
 
+// Removes Multiple At Head
+test('Properly Removes Multiple Values At Head', () => {
+  const testList = new LinkedList(arr)
+  testList.remove(0, testList._lastIndex())
+  expect(JSON.stringify(testList)).toBe(
+    JSON.stringify(new LinkedList([carla2]))
+  )
+})
+
 // test('Properly Removes Intermediate Value', () => {
 //   const testList = new LinkedList(['4'])
 //     .prepend([carla])
