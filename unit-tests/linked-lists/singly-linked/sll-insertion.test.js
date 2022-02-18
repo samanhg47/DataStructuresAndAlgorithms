@@ -41,6 +41,7 @@ test('Properly Inserts Single Value To Start Of Filled List', () => {
 test('Properly Inserts Single Value To Middle Of Filled List', () => {
   const testList1 = new LinkedList([carla, '4', carla2]).insert(2, [146])
   expect(JSON.stringify(testList1)).toBe(JSON.stringify(obj))
+
   const testList2 = new LinkedList([carla, 146, carla2]).insert(1, ['4'])
   expect(JSON.stringify(testList2)).toBe(JSON.stringify(obj))
 })

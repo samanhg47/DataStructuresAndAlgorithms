@@ -79,50 +79,50 @@ test('Correct Indices Pass Check', () => {
 test('Index Length Check Fails Indices', () => {
   expect(() => {
     list._checkIndex(4)
-  }).toThrow('That Index Is Undefined')
+  }).toThrow('Index 4 Is Undefinded')
   expect(() => {
     list._checkIndex(1000000)
-  }).toThrow('That Index Is Undefined')
+  }).toThrow('Index 1000000 Is Undefined')
 })
 
 test('Negative Numbers Fail Index Check', () => {
   expect(() => {
     list._checkIndex(-1)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
   expect(() => {
     list._checkIndex(-1, false)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
   expect(() => {
     list._checkIndex(-1000000)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
   expect(() => {
     list._checkIndex(-1000000, false)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
 })
 
 test('Strings Fail Index Check', () => {
   expect(() => {
     list._checkIndex('b')
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
   expect(() => {
     list._checkIndex('b', false)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
 })
 
 test('Arrays Fail Index Check', () => {
   expect(() => {
     list._checkIndex(['a'])
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
   expect(() => {
     list._checkIndex(['a'], false)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
 })
 
 test('Objects Fail Index Check', () => {
   expect(() => {
     list._checkIndex({ 1: 'a' })
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
   expect(() => {
     list._checkIndex({ 1: 'a' }, false)
-  }).toThrow('Index Must Be A Natural Number (This Includes 0)')
+  }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
 })
