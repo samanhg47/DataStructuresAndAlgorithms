@@ -8,15 +8,6 @@ const {
   buildList
 } = require('./sll')
 
-// test('Properly Changes Values', () => {
-//   const testList = new LinkedList(['4'])
-//     .prependOne(carla)
-//     .appendOne(carla2)
-//     .insertOne(2, { height: 4, width: 5 })
-//     .changeValue(2, 146)
-//   expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
-// })
-
 // test('Properly Converts List To Array', () => {
 //   expect(JSON.stringify(list.asArray())).toBe(JSON.stringify(arr))
 // })
