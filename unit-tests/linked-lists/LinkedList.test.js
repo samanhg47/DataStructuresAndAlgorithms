@@ -4,7 +4,8 @@ const {
   removalTests,
   insertionTests,
   creationTests,
-  changeValueTests
+  changeValueTests,
+  conversionTests
 } = require('./singly-linked')
 
 describe('Singly Linked List Test', () => {
@@ -14,4 +15,5 @@ describe('Singly Linked List Test', () => {
   insertionTests()
   changeValueTests()
   removalTests()
+  conversionTests()
 })

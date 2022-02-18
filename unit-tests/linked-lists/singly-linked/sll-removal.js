@@ -85,6 +85,13 @@ const removalTests = () =>
       list.clear()
       expect(JSON.stringify(list)).toBe(JSON.stringify(new LinkedList()))
     })
+
+    // Throws Error
+    test('Remove Error: Index1 < Index2', () => {
+      expect(() => {
+        return list.remove(3, 1)
+      }).toThrow('Start Index Must Be Smaller Than Stop Index')
+    })
   })
 
 module.exports = removalTests

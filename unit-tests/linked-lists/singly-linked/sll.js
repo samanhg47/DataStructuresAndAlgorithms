@@ -88,6 +88,7 @@ class LinkedList {
   _limitIndex(index) {
     return index <= this._lastIndex() ? index : this._lastIndex()
   }
+  // Appending //////////////////////////////////////////////////////
   _append(value) {
     const newNode = new Node(value, null)
     if (this.length > 0) {
@@ -108,6 +109,7 @@ class LinkedList {
       this._valueAsArrayErr()
     }
   }
+  // Prepending /////////////////////////////////////////////////////
   _prepend(value) {
     const newNode = new Node(value, this.head)
     if (this.length === 0) {
@@ -126,6 +128,7 @@ class LinkedList {
       this._valueAsArrayErr()
     }
   }
+  // Insertion //////////////////////////////////////////////////////
   _insert(index, value) {
     let node = this._nodeAt(index - 1)
     const newNode = new Node(value, node.next)
@@ -152,27 +155,7 @@ class LinkedList {
       this._valueAsArrayErr()
     }
   }
-  // _remove(index) {
-  //   if (this._checkIndex(index)) {
-  //     if (index === 0) {
-  //       const newHead = this.head.next
-  //       this.head = newHead
-  //     } else {
-  //       let node
-  //       if (index === this._lastIndex()) {
-  //         node = this._nodeAt(index - 1)
-  //         const newNext = node.next.next
-  //         node.next = newNext
-  //         this.tail = node
-  //       } else {
-  //         node = this._nodeAt(index - 1)
-  //         const newNext = node.next.next
-  //         node.next = newNext
-  //       }
-  //     }
-  //     this.length--
-  //   }
-  // }
+  // Removal ////////////////////////////////////////////////////////
   clear() {
     this._createNewList()
   }
@@ -209,6 +192,7 @@ class LinkedList {
       }
     }
   }
+  // Prepending /////////////////////////////////////////////////////
   changeValue(index, value) {
     if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
@@ -225,17 +209,18 @@ class LinkedList {
   indexOf(value) {
     let node = this.head
     let counter = 0
-    let index
-    while (index === undefined || counter < this.length) {
-      node.value === value && (index = counter)
+    let indices = []
+    while (counter < this.length) {
+      node.value === value && indices.push(counter)
       node = node.next
       counter++
     }
-    if (index !== undefined) {
-      return index
+    if (indices.length !== 0) {
+      return indices
     }
     this._valueNotFoundError()
   }
+  // Conversion /////////////////////////////////////////////////////
   asArray() {
     let node = this.head
     let counter = 0
