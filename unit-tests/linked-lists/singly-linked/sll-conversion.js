@@ -12,6 +12,7 @@ const conversionTests = () =>
   describe('Conversion', () => {
     //Converts List To Array
     test('Properly Converts List To Array', () => {
+      console.log(list)
       expect(JSON.stringify(list.asArray())).toBe(JSON.stringify(arr))
     })
 

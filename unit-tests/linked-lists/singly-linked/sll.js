@@ -223,12 +223,14 @@ class LinkedList {
   // Conversion /////////////////////////////////////////////////////
   asArray() {
     let node = this.head
-    let counter = 0
-    const array = [node.value]
-    while (counter < this._lastIndex()) {
-      node = node.next
-      array.push(node.value)
-      counter++
+    const array = []
+    if (node) {
+      let counter = 0
+      while (counter < this.length) {
+        array.push(node.value)
+        node = node.next
+        counter++
+      }
     }
     return array
   }
@@ -236,16 +238,18 @@ class LinkedList {
     let node = this.head
     let counter = 0
     const hash = new Map()
-    let value
-    while (counter < this.length) {
-      value = node.value
-      if (hash.get(value)) {
-        hash.set(value, hash.get(value) + 1)
-      } else {
-        hash.set(value, 1)
+    if (node) {
+      let value
+      while (counter < this.length) {
+        value = node.value
+        if (hash.get(value)) {
+          hash.set(value, hash.get(value) + 1)
+        } else {
+          hash.set(value, 1)
+        }
+        node = node.next
+        counter++
       }
-      node = node.next
-      counter++
     }
     return hash
   }

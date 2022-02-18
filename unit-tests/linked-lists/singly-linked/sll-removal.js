@@ -74,16 +74,19 @@ const removalTests = () =>
     })
     // Clears List
     test('Remove All (Index2 = Length)', () => {
-      list.remove(0, list.length)
-      expect(JSON.stringify(list)).toBe(JSON.stringify(new LinkedList()))
+      const testList = new LinkedList(arr)
+      testList.remove(0, testList.length)
+      expect(JSON.stringify(testList)).toBe(JSON.stringify(new LinkedList()))
     })
     test('Remove All (Index2 > Length)', () => {
-      list.remove(0, 100)
-      expect(JSON.stringify(list)).toBe(JSON.stringify(new LinkedList()))
+      const testList = new LinkedList(arr)
+      testList.remove(0, 100)
+      expect(JSON.stringify(testList)).toBe(JSON.stringify(new LinkedList()))
     })
     test('Remove All Via Clear Method', () => {
-      list.clear()
-      expect(JSON.stringify(list)).toBe(JSON.stringify(new LinkedList()))
+      const testList = new LinkedList(arr)
+      testList.clear()
+      expect(JSON.stringify(testList)).toBe(JSON.stringify(new LinkedList()))
     })
 
     // Throws Error
