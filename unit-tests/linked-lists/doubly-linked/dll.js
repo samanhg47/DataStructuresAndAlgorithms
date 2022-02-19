@@ -46,19 +46,6 @@ class LinkedList {
       }
     }
   }
-  _isCloserToHead(index) {
-    const xFrmTail = this._lastIndex() - index
-    return index <= xFrmTail ? true : false
-  }
-  _nodeAt(index) {
-    let node = this.head
-    let counter = 0
-    while (counter < index) {
-      node = node.next
-      counter++
-    }
-    return node
-  }
   // Errors /////////////////////////////////////////////////////////
   _valueAsArrayErr() {
     throw new Error(
@@ -81,6 +68,30 @@ class LinkedList {
   _lastIndex() {
     return this.length > 0 ? this.length - 1 : null
   }
+  _xFromTail() {
+    return this._lastIndex() - index
+  }
+  _isCloserToHead(index) {
+    return index < this._xFromTail() ? true : false
+  }
+  _nodeAt(index) {
+    if (this._isCloserToHead(index)) {
+      let node = this.head
+      let counter = 0
+      while (counter < index) {
+        node = node.next
+        counter++
+      }
+    } else {
+      let node = this.tail
+      let counter = 0
+      while (counter < this._xFromTail()) {
+        node = node.last
+        counter++
+      }
+    }
+    return node
+  }
   _checkIndex(index, checkLength = true) {
     if (isNaturalNumber(index)) {
       if (!checkLength || index < this.length) {
@@ -90,8 +101,25 @@ class LinkedList {
     }
     this._naturalIndexError()
   }
-  _limitIndex(index) {
-    return index <= this._lastIndex() ? index : this._lastIndex()
+  valueAt(index) {
+    if (this._checkIndex(index)) {
+      let node = this._nodeAt(index)
+      return node.value
+    }
+  }
+  indexOf(value) {
+    let node = this.head
+    let counter = 0
+    let indices = []
+    while (counter < this.length) {
+      node.value === value && indices.push(counter)
+      node = node.next
+      counter++
+    }
+    if (indices.length !== 0) {
+      return indices
+    }
+    this._valueNotFoundError()
   }
   // Appending //////////////////////////////////////////////////////
   _append(value) {
@@ -197,33 +225,13 @@ class LinkedList {
       }
     }
   }
-  // Prepending /////////////////////////////////////////////////////
+  // Change Value ///////////////////////////////////////////////////
   changeValue(index, value) {
     if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       node.value = value
       return this
     }
-  }
-  valueAt(index) {
-    if (this._checkIndex(index)) {
-      let node = this._nodeAt(index)
-      return node.value
-    }
-  }
-  indexOf(value) {
-    let node = this.head
-    let counter = 0
-    let indices = []
-    while (counter < this.length) {
-      node.value === value && indices.push(counter)
-      node = node.next
-      counter++
-    }
-    if (indices.length !== 0) {
-      return indices
-    }
-    this._valueNotFoundError()
   }
   // Conversion /////////////////////////////////////////////////////
   asArray() {
