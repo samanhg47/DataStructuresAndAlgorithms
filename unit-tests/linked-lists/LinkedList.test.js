@@ -10,12 +10,14 @@ const {
   sllValueRetrievalTests,
   sllConversionTests
 } = require('./singly-linked')
+
 // const {
 //   dllCreationTests,
 //   dllCheckIndex,
 //   dllAppendingTests,
 //   dllPrependingTests,
 //   dllInsertionTests,
+//   dllIndexOfTests,
 //   dllChangeValueTests,
 //   dllRemovalTests,
 //   dllValueRetrievalTests,
@@ -41,6 +43,7 @@ describe('Singly Linked List Test', () => {
 //   dllAppendingTests()
 //   dllPrependingTests()
 //   dllInsertionTests()
+//   dllIndexOfTests()
 //   dllChangeValueTests()
 //   dllRemovalTests()
 //   dllValueRetrievalTests()

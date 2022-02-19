@@ -107,7 +107,6 @@ class LinkedList {
       node = node.next
       counter++
     }
-    console.log(indices)
     if (indices.length !== 0) {
       return indices
     }
@@ -130,9 +129,8 @@ class LinkedList {
         this._append(value)
       }
       return this
-    } else {
-      this._valueAsArrayErr()
     }
+    this._valueAsArrayErr()
   }
   // Prepending /////////////////////////////////////////////////////
   _prepend(value) {

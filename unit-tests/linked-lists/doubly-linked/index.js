@@ -7,6 +7,7 @@ const dllInsertionTests = require('./dll-insertion')
 const dllPrependingTests = require('./dll-prepending')
 const dllRemovalTests = require('./dll-removal')
 const dllValueRetrievalTests = require('./dll-valueAt')
+const dllIndexOfTests = require('./dll-indexOf')
 
 module.exports = {
   dllCreationTests,
@@ -14,6 +15,7 @@ module.exports = {
   dllAppendingTests,
   dllPrependingTests,
   dllInsertionTests,
+  dllIndexOfTests,
   dllChangeValueTests,
   dllRemovalTests,
   dllValueRetrievalTests,
