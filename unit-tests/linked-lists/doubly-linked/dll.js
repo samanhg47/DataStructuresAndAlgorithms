@@ -46,6 +46,10 @@ class LinkedList {
       }
     }
   }
+  _isCloserToHead(index) {
+    const xFrmTail = this._lastIndex() - index
+    return index <= xFrmTail ? true : false
+  }
   _nodeAt(index) {
     let node = this.head
     let counter = 0
