@@ -48,7 +48,7 @@ class LinkedList {
   // Errors /////////////////////////////////////////////////////////
   _valueAsArrayErr() {
     throw new Error(
-      'Values must be in their desired order as elements in an array'
+      'Values Must Be In Their Desired Order As Elements In An Array'
     )
   }
   _undefindedIndexError(index) {
@@ -61,7 +61,7 @@ class LinkedList {
     throw new Error('Start Index Must Be Smaller Than Stop Index')
   }
   _valueNotFoundError() {
-    throw new Error('Value does not exist within list')
+    throw new Error('Value Does Not Exist Within List')
   }
   _emptyListError() {
     if (!this.length) {
@@ -107,6 +107,7 @@ class LinkedList {
       node = node.next
       counter++
     }
+    console.log(indices)
     if (indices.length !== 0) {
       return indices
     }

@@ -1,12 +1,4 @@
-const {
-  LinkedList,
-  carla,
-  carla2,
-  obj,
-  list,
-  arr,
-  buildList
-} = require('./sll')
+const { LinkedList, carla, carla2, obj } = require('./sll')
 
 const changeValueTests = () =>
   describe('Changing Values', () => {
