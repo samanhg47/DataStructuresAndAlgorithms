@@ -31,12 +31,12 @@ const creationTests = () =>
     })
 
     // Throws Creation Errors
-    test('DLL: Throws Error When Given Multiple Arguments', () => {
+    test('DLL: Creation Throws Error When Given Multiple Arguments', () => {
       expect(() => {
         buildList(arr, 7)
       }).toThrow('One Input Maximum')
     })
-    test('DLL: Throws Error When Argument Is Not Array', () => {
+    test('DLL: Creation Throws Error When Argument Is Not Array', () => {
       expect(() => {
         buildList(7)
       }).toThrow('Input Must Be An Array')

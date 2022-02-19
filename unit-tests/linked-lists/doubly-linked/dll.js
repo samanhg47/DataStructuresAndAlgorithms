@@ -4,9 +4,10 @@ function isNaturalNumber(num) {
   return isInteger && isNatural
 }
 class Node {
-  constructor(value, next) {
+  constructor(value, next, last) {
     this.value = value
     this.next = next
+    this.last = last
   }
 }
 class LinkedList {
@@ -34,7 +35,7 @@ class LinkedList {
     this.length = 0
   }
   _fillList(array) {
-    this.head = new Node(array[0], null)
+    this.head = new Node(array[0], null, null)
     this.tail = this.head
     this.length = 1
     if (array.length > 1) {
