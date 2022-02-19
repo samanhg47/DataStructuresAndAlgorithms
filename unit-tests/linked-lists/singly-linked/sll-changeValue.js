@@ -10,7 +10,7 @@ const {
 
 const changeValueTests = () =>
   describe('Changing Values', () => {
-    test('Properly Changes Values', () => {
+    test('SLL: Properly Changes Values', () => {
       const testList = new LinkedList([
         carla,
         '4',

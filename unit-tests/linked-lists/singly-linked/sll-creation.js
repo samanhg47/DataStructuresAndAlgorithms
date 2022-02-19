@@ -7,7 +7,7 @@ const creationTests = () =>
    */
   describe('Creation', () => {
     // Creates Linked List
-    test('Creates Linked List (No Input)', () => {
+    test('SLL: Creates Linked List (No Input)', () => {
       const testList = new LinkedList()
       const testObj = {
         head: null,
@@ -16,7 +16,7 @@ const creationTests = () =>
       }
       expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
     })
-    test('Creates Linked List (Single Input)', () => {
+    test('SLL: Creates Linked List (Single Input)', () => {
       const testList = new LinkedList(['4'])
       const testObj = {
         head: { value: '4', next: null },
@@ -25,18 +25,18 @@ const creationTests = () =>
       }
       expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
     })
-    test('Creates Linked List (Multiple Inputs As Array)dx', () => {
+    test('SLL: Creates Linked List (Multiple Inputs As Array)dx', () => {
       const testList = new LinkedList(arr)
       expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
     })
 
     // Throws Creation Errors
-    test('Throws Error When Given Multiple Arguments', () => {
+    test('SLL: Throws Error When Given Multiple Arguments', () => {
       expect(() => {
         buildList(arr, 7)
       }).toThrow('One Input Maximum')
     })
-    test('Throws Error When Argument Is Not Array', () => {
+    test('SLL: Throws Error When Argument Is Not Array', () => {
       expect(() => {
         buildList(7)
       }).toThrow('Input Must Be An Array')

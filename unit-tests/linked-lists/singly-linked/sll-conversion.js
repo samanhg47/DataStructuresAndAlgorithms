@@ -11,13 +11,13 @@ const {
 const conversionTests = () =>
   describe('Conversion', () => {
     //Converts List To Array
-    test('Properly Converts List To Array', () => {
+    test('SLL: Properly Converts List To Array', () => {
       console.log(list)
       expect(JSON.stringify(list.asArray())).toBe(JSON.stringify(arr))
     })
 
     //Converts List To Hash Table
-    test('Properly Converts List To Hash Table', () => {
+    test('SLL: Properly Converts List To Hash Table', () => {
       const hashed = list.hashed()
       expect(JSON.stringify([...hashed.keys()])).toBe(JSON.stringify(arr))
       expect(hashed.get(carla)).toBe(1)
