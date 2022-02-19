@@ -8,15 +8,16 @@ const {
   buildList
 } = require('./sll')
 
+const header = 'SLL-Convert: '
 const conversionTests = () =>
   describe('Conversion', () => {
     //Converts List To Array
-    test('SLL: Properly Converts List To Array', () => {
+    test(header + 'To Array', () => {
       expect(JSON.stringify(list.asArray())).toBe(JSON.stringify(arr))
     })
 
     //Converts List To Hash Table
-    test('SLL: Properly Converts List To Hash Table', () => {
+    test(header + ' To Hashed Table', () => {
       const hashed = list.hashed()
       expect(JSON.stringify([...hashed.keys()])).toBe(JSON.stringify(arr))
       expect(hashed.get(carla)).toBe(1)

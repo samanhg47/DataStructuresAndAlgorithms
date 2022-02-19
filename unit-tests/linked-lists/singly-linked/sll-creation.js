@@ -1,13 +1,10 @@
 const { LinkedList, obj, arr, buildList } = require('./sll')
 
+const header = 'SLL-Create: '
 const creationTests = () =>
-  /**
-   * @group LinkedLists
-   * @group sll/creation
-   */
   describe('Creation', () => {
     // Creates Linked List
-    test('SLL: Creates Linked List (No Input)', () => {
+    test(header + 'No Input', () => {
       const testList = new LinkedList()
       const testObj = {
         head: null,
@@ -16,7 +13,7 @@ const creationTests = () =>
       }
       expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
     })
-    test('SLL: Creates Linked List (Single Input)', () => {
+    test(header + 'Single Input', () => {
       const testList = new LinkedList(['4'])
       const testObj = {
         head: { value: '4', next: null },
@@ -25,18 +22,18 @@ const creationTests = () =>
       }
       expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
     })
-    test('SLL: Creates Linked List (Multiple Inputs As Array)dx', () => {
+    test(header + 'Multiple Inputs As Array', () => {
       const testList = new LinkedList(arr)
       expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
     })
 
     // Throws Creation Errors
-    test('SLL: Creation Throws Error When Given Multiple Arguments', () => {
+    test(header + 'Error When Given Multiple Arguments', () => {
       expect(() => {
         buildList(arr, 7)
       }).toThrow('One Input Maximum')
     })
-    test('SLL: Creation Throws Error When Argument Is Not Array', () => {
+    test(header + 'Error When Argument Is Not Array', () => {
       expect(() => {
         buildList(7)
       }).toThrow('Input Must Be An Array')
