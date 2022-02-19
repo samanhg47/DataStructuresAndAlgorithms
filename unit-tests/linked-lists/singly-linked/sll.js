@@ -45,15 +45,6 @@ class LinkedList {
       }
     }
   }
-  _nodeAt(index) {
-    let node = this.head
-    let counter = 0
-    while (counter < index) {
-      node = node.next
-      counter++
-    }
-    return node
-  }
   // Errors /////////////////////////////////////////////////////////
   _valueAsArrayErr() {
     throw new Error(
@@ -72,6 +63,11 @@ class LinkedList {
   _valueNotFoundError() {
     throw new Error('Value does not exist within list')
   }
+  _emptyListError() {
+    if (!this.length) {
+      throw new Error("This Method Can't Be Used On An Empty List")
+    }
+  }
   // Indices ////////////////////////////////////////////////////////
   _lastIndex() {
     return this.length > 0 ? this.length - 1 : null
@@ -85,8 +81,36 @@ class LinkedList {
     }
     this._naturalIndexError()
   }
-  _limitIndex(index) {
-    return index <= this._lastIndex() ? index : this._lastIndex()
+  _nodeAt(index) {
+    let node = this.head
+    let counter = 0
+    while (counter < index) {
+      node = node.next
+      counter++
+    }
+    return node
+  }
+  valueAt(index) {
+    this._emptyListError()
+    if (this._checkIndex(index)) {
+      let node = this._nodeAt(index)
+      return node.value
+    }
+  }
+  indexOf(value) {
+    this._emptyListError()
+    let node = this.head
+    let counter = 0
+    let indices = []
+    while (counter < this.length) {
+      node.value === value && indices.push(counter)
+      node = node.next
+      counter++
+    }
+    if (indices.length !== 0) {
+      return indices
+    }
+    this._valueNotFoundError()
   }
   // Appending //////////////////////////////////////////////////////
   _append(value) {
@@ -157,6 +181,7 @@ class LinkedList {
   }
   // Removal ////////////////////////////////////////////////////////
   clear() {
+    this._emptyListError()
     this._createNewList()
   }
   _remove(index1, index2) {
@@ -180,6 +205,7 @@ class LinkedList {
     return this
   }
   remove(index1, index2 = index1 + 1) {
+    this._emptyListError()
     if (this._checkIndex(index1, false)) {
       if (this._checkIndex(index2, false)) {
         if (index1 < index2) {
@@ -192,33 +218,14 @@ class LinkedList {
       }
     }
   }
-  // Prepending /////////////////////////////////////////////////////
+  // Change Value ///////////////////////////////////////////////////
   changeValue(index, value) {
+    this._emptyListError()
     if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       node.value = value
       return this
     }
-  }
-  valueAt(index) {
-    if (this._checkIndex(index)) {
-      let node = this._nodeAt(index)
-      return node.value
-    }
-  }
-  indexOf(value) {
-    let node = this.head
-    let counter = 0
-    let indices = []
-    while (counter < this.length) {
-      node.value === value && indices.push(counter)
-      node = node.next
-      counter++
-    }
-    if (indices.length !== 0) {
-      return indices
-    }
-    this._valueNotFoundError()
   }
   // Conversion /////////////////////////////////////////////////////
   asArray() {
