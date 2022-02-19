@@ -1,21 +1,21 @@
-const checkIndex = require('./sll-checkIndex')
-const appendingTests = require('./sll-appending')
-const changeValueTests = require('./sll-changeValue')
-const conversionTests = require('./sll-conversion')
-const creationTests = require('./sll-creation')
-const insertionTests = require('./sll-insertion')
-const prependingTests = require('./sll-prepending')
-const removalTests = require('./sll-removal')
-const valueRetrievalTests = require('./sll-valueAt')
+const sllCheckIndex = require('./sll-checkIndex')
+const sllAppendingTests = require('./sll-appending')
+const sllChangeValueTests = require('./sll-changeValue')
+const sllConversionTests = require('./sll-conversion')
+const sllCreationTests = require('./sll-creation')
+const sllInsertionTests = require('./sll-insertion')
+const sllPrependingTests = require('./sll-prepending')
+const sllRemovalTests = require('./sll-removal')
+const sllValueRetrievalTests = require('./sll-valueAt')
 
 module.exports = {
-  checkIndex,
-  valueRetrievalTests,
-  insertionTests,
-  removalTests,
-  creationTests,
-  prependingTests,
-  appendingTests,
-  changeValueTests,
-  conversionTests
+  sllCreationTests,
+  sllCheckIndex,
+  sllAppendingTests,
+  sllPrependingTests,
+  sllInsertionTests,
+  sllChangeValueTests,
+  sllRemovalTests,
+  sllValueRetrievalTests,
+  sllConversionTests
 }
