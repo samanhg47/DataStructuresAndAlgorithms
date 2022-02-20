@@ -4,9 +4,10 @@ function isNaturalNumber(num) {
   return isInteger && isNatural
 }
 class Node {
-  constructor(value, next) {
+  constructor(value, next, last) {
     this.value = value
     this.next = next
+    this.last = last
   }
 }
 class LinkedList {
@@ -43,29 +44,6 @@ class LinkedList {
         this._append(array[index])
         index++
       }
-    }
-  }
-  // Errors /////////////////////////////////////////////////////////
-  _valueAsArrayErr() {
-    throw new Error(
-      'Values Must Be In Their Desired Order As Elements In An Array'
-    )
-  }
-  _undefindedIndexError(index) {
-    throw new Error(`Index ${index} Is Undefined`)
-  }
-  _naturalIndexError() {
-    throw new Error('Indices Must Be Natural Numbers (This Includes 0)')
-  }
-  _startSmallerError() {
-    throw new Error('Start Index Must Be Smaller Than Stop Index')
-  }
-  _valueNotFoundError() {
-    throw new Error('Value Does Not Exist Within List')
-  }
-  _emptyListError() {
-    if (!this.length) {
-      throw new Error("This Method Can't Be Used On An Empty List")
     }
   }
   // Indices ////////////////////////////////////////////////////////
@@ -129,7 +107,7 @@ class LinkedList {
   }
   // Appending //////////////////////////////////////////////////////
   _append(value) {
-    const newNode = new Node(value, null)
+    const newNode = new Node(value, null, this.tail)
     if (this.length > 0) {
       this.tail.next = newNode
     } else {
@@ -271,6 +249,29 @@ class LinkedList {
       }
     }
     return hash
+  }
+  // Errors /////////////////////////////////////////////////////////
+  _valueAsArrayErr() {
+    throw new Error(
+      'Values Must Be In Their Desired Order As Elements In An Array'
+    )
+  }
+  _undefindedIndexError(index) {
+    throw new Error(`Index ${index} Is Undefined`)
+  }
+  _naturalIndexError() {
+    throw new Error('Indices Must Be Natural Numbers (This Includes 0)')
+  }
+  _startSmallerError() {
+    throw new Error('Start Index Must Be Smaller Than Stop Index')
+  }
+  _valueNotFoundError() {
+    throw new Error('Value Does Not Exist Within List')
+  }
+  _emptyListError() {
+    if (!this.length) {
+      throw new Error("This Method Can't Be Used On An Empty List")
+    }
   }
 }
 

@@ -45,29 +45,6 @@ class LinkedList {
       }
     }
   }
-  // Errors /////////////////////////////////////////////////////////
-  _valueAsArrayErr() {
-    throw new Error(
-      'Values Must Be In Their Desired Order As Elements In An Array'
-    )
-  }
-  _undefindedIndexError(index) {
-    throw new Error(`Index ${index} Is Undefined`)
-  }
-  _naturalIndexError() {
-    throw new Error('Indices Must Be Natural Numbers (This Includes 0)')
-  }
-  _startSmallerError() {
-    throw new Error('Start Index Must Be Smaller Than Stop Index')
-  }
-  _valueNotFoundError() {
-    throw new Error('Value Does Not Exist Within List')
-  }
-  _emptyListError() {
-    if (!this.length) {
-      throw new Error("This Method Can't Be Used On An Empty List")
-    }
-  }
   // Indices ////////////////////////////////////////////////////////
   _lastIndex() {
     return this.length > 0 ? this.length - 1 : null
@@ -256,6 +233,29 @@ class LinkedList {
       }
     }
     return hash
+  }
+  // Errors /////////////////////////////////////////////////////////
+  _valueAsArrayErr() {
+    throw new Error(
+      'Values Must Be In Their Desired Order As Elements In An Array'
+    )
+  }
+  _undefindedIndexError(index) {
+    throw new Error(`Index ${index} Is Undefined`)
+  }
+  _naturalIndexError() {
+    throw new Error('Indices Must Be Natural Numbers (This Includes 0)')
+  }
+  _startSmallerError() {
+    throw new Error('Start Index Must Be Smaller Than Stop Index')
+  }
+  _valueNotFoundError() {
+    throw new Error('Value Does Not Exist Within List')
+  }
+  _emptyListError() {
+    if (!this.length) {
+      throw new Error("This Method Can't Be Used On An Empty List")
+    }
   }
 }
 
