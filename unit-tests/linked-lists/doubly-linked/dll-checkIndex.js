@@ -1,19 +1,10 @@
-const { list } = require('./dll')
+const { list } = require('./sll')
 
+const header = 'SLL-CheckIndex: '
 const checkIndex = () =>
   describe('Index Check', () => {
-    // Passes
-    test('DLL: Correct Indices Pass Check', () => {
-      expect(list._checkIndex(0)).toBe(true)
-      expect(list._checkIndex(1)).toBe(true)
-      expect(list._checkIndex(2)).toBe(true)
-      expect(list._checkIndex(3)).toBe(true)
-      expect(list._checkIndex(4, false)).toBe(true)
-      expect(list._checkIndex(1000000, false)).toBe(true)
-    })
-
     // Number Errors
-    test('DLL: Length Check Fails Indices', () => {
+    test(header + 'Error If Length Check = True & Index > Last Index', () => {
       expect(() => {
         list._checkIndex(4)
       }).toThrow('Index 4 Is Undefined')
@@ -21,7 +12,7 @@ const checkIndex = () =>
         list._checkIndex(1000000)
       }).toThrow('Index 1000000 Is Undefined')
     })
-    test('DLL: Negative Numbers Fail Index Check', () => {
+    test(header + 'Error If Index Is Negative', () => {
       expect(() => {
         list._checkIndex(-1)
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
@@ -37,7 +28,7 @@ const checkIndex = () =>
     })
 
     // Input Type Errors
-    test('DLL: Strings Fail Index Check', () => {
+    test(header + 'Error If Argument Is String', () => {
       expect(() => {
         list._checkIndex('b')
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
@@ -45,7 +36,7 @@ const checkIndex = () =>
         list._checkIndex('b', false)
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
     })
-    test('DLL: Arrays Fail Index Check', () => {
+    test(header + 'Error If Argument Is Array', () => {
       expect(() => {
         list._checkIndex(['a'])
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
@@ -53,13 +44,23 @@ const checkIndex = () =>
         list._checkIndex(['a'], false)
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
     })
-    test('DLL: Objects Fail Index Check', () => {
+    test(header + 'Error If Argument Is Object', () => {
       expect(() => {
         list._checkIndex({ 1: 'a' })
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
       expect(() => {
         list._checkIndex({ 1: 'a' }, false)
       }).toThrow('Indices Must Be Natural Numbers (This Includes 0)')
+    })
+
+    // Passes
+    test(header + 'Correct Indices Pass Check', () => {
+      expect(list._checkIndex(0)).toBeTruthy()
+      expect(list._checkIndex(1)).toBeTruthy()
+      expect(list._checkIndex(2)).toBeTruthy()
+      expect(list._checkIndex(3)).toBeTruthy()
+      expect(list._checkIndex(4, false)).toBeTruthy()
+      expect(list._checkIndex(1000000, false)).toBeTruthy()
     })
   })
 

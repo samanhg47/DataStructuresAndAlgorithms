@@ -4,10 +4,9 @@ function isNaturalNumber(num) {
   return isInteger && isNatural
 }
 class Node {
-  constructor(value, next, last) {
+  constructor(value, next) {
     this.value = value
     this.next = next
-    this.last = last
   }
 }
 class LinkedList {
@@ -35,7 +34,7 @@ class LinkedList {
     this.length = 0
   }
   _fillList(array) {
-    this.head = new Node(array[0], null, null)
+    this.head = new Node(array[0], null)
     this.tail = this.head
     this.length = 1
     if (array.length > 1) {
@@ -49,7 +48,7 @@ class LinkedList {
   // Errors /////////////////////////////////////////////////////////
   _valueAsArrayErr() {
     throw new Error(
-      'Values must be in their desired order as elements in an array'
+      'Values Must Be In Their Desired Order As Elements In An Array'
     )
   }
   _undefindedIndexError(index) {
@@ -62,7 +61,12 @@ class LinkedList {
     throw new Error('Start Index Must Be Smaller Than Stop Index')
   }
   _valueNotFoundError() {
-    throw new Error('Value does not exist within list')
+    throw new Error('Value Does Not Exist Within List')
+  }
+  _emptyListError() {
+    if (!this.length) {
+      throw new Error("This Method Can't Be Used On An Empty List")
+    }
   }
   // Indices ////////////////////////////////////////////////////////
   _lastIndex() {
@@ -73,6 +77,15 @@ class LinkedList {
   }
   _isCloserToHead(index) {
     return index < this._xFromTail() ? true : false
+  }
+  _checkIndex(index, checkLength = true) {
+    if (isNaturalNumber(index)) {
+      if (!checkLength || index < this.length) {
+        return true
+      }
+      this._undefindedIndexError(index)
+    }
+    this._naturalIndexError()
   }
   _nodeAt(index) {
     if (this._isCloserToHead(index)) {
@@ -92,22 +105,15 @@ class LinkedList {
     }
     return node
   }
-  _checkIndex(index, checkLength = true) {
-    if (isNaturalNumber(index)) {
-      if (!checkLength || index < this.length) {
-        return true
-      }
-      this._undefindedIndexError(index)
-    }
-    this._naturalIndexError()
-  }
   valueAt(index) {
+    this._emptyListError()
     if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       return node.value
     }
   }
   indexOf(value) {
+    this._emptyListError()
     let node = this.head
     let counter = 0
     let indices = []
@@ -138,9 +144,8 @@ class LinkedList {
         this._append(value)
       }
       return this
-    } else {
-      this._valueAsArrayErr()
     }
+    this._valueAsArrayErr()
   }
   // Prepending /////////////////////////////////////////////////////
   _prepend(value) {
@@ -157,9 +162,8 @@ class LinkedList {
         this._prepend(values[i])
       }
       return this
-    } else {
-      this._valueAsArrayErr()
     }
+    this._valueAsArrayErr()
   }
   // Insertion //////////////////////////////////////////////////////
   _insert(index, value) {
@@ -184,12 +188,12 @@ class LinkedList {
         }
         return this
       }
-    } else {
-      this._valueAsArrayErr()
     }
+    this._valueAsArrayErr()
   }
   // Removal ////////////////////////////////////////////////////////
   clear() {
+    this._emptyListError()
     this._createNewList()
   }
   _remove(index1, index2) {
@@ -213,6 +217,7 @@ class LinkedList {
     return this
   }
   remove(index1, index2 = index1 + 1) {
+    this._emptyListError()
     if (this._checkIndex(index1, false)) {
       if (this._checkIndex(index2, false)) {
         if (index1 < index2) {
@@ -227,6 +232,7 @@ class LinkedList {
   }
   // Change Value ///////////////////////////////////////////////////
   changeValue(index, value) {
+    this._emptyListError()
     if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       node.value = value
