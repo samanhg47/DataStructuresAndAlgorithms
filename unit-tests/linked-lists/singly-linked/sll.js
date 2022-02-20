@@ -147,9 +147,8 @@ class LinkedList {
         this._prepend(values[i])
       }
       return this
-    } else {
-      this._valueAsArrayErr()
     }
+    this._valueAsArrayErr()
   }
   // Insertion //////////////////////////////////////////////////////
   _insert(index, value) {
@@ -174,9 +173,8 @@ class LinkedList {
         }
         return this
       }
-    } else {
-      this._valueAsArrayErr()
     }
+    this._valueAsArrayErr()
   }
   // Removal ////////////////////////////////////////////////////////
   clear() {

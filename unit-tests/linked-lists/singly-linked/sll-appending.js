@@ -34,7 +34,7 @@ const appendingTests = () =>
         tail: { value: '4', next: null },
         length: 1
       }
-      expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
+      expect(testList).toEqual(testObj)
     })
 
     // Appends Single Value To List
@@ -45,19 +45,19 @@ const appendingTests = () =>
         tail: { value: '4', next: null },
         length: 2
       }
-      expect(JSON.stringify(testList)).toBe(JSON.stringify(testObj))
+      expect(testList).toEqual(testObj)
     })
 
     // Append Multiple Values To Empty List
     test(header + 'Multiple Values To Empty List', () => {
       const testList = new LinkedList().append([carla, '4', 146, carla2])
-      expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
+      expect(testList).toEqual(obj)
     })
 
     // Append Multiple Values To List
     test(header + 'Multiple Values To List', () => {
       const testList = new LinkedList([carla]).append(['4', 146, carla2])
-      expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
+      expect(testList).toEqual(obj)
     })
   })
 

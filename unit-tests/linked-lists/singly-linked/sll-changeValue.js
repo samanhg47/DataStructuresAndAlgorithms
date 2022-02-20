@@ -18,7 +18,7 @@ const changeValueTests = () =>
         { height: 4, width: 5 },
         carla2
       ]).changeValue(2, 146)
-      expect(JSON.stringify(testList)).toBe(JSON.stringify(obj))
+      expect(testList).toEqual(obj)
     })
   })
 
