@@ -1,6 +1,6 @@
-const { list } = require('./sll')
+const { list } = require('./dll')
 
-const header = 'SLL-CheckIndex: '
+const header = 'DLL-CheckIndex: '
 const checkIndex = () =>
   describe('Index Check', () => {
     // Number Errors

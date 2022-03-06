@@ -1,6 +1,6 @@
-const { LinkedList, carla, carla2, obj } = require('./sll')
+const { LinkedList, carla, carla2, obj } = require('./dll')
 
-const header = 'SLL-ChangeValue: '
+const header = 'DLL-ChangeValue: '
 const changeValueTests = () =>
   describe('Changing Values', () => {
     // Throws Error If List Is Empty

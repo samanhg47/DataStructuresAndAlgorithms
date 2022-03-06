@@ -15,7 +15,7 @@ class LinkedList {
     if (arguments.length === 1) {
       const inputIsArray = Array.isArray(input)
       if (inputIsArray) {
-        this._createNewList()
+        this._emptyList()
         if (input.length > 0) {
           this._fillList(input)
         }
@@ -23,19 +23,19 @@ class LinkedList {
         throw new Error('Input Must Be An Array')
       }
     } else if (arguments.length === 0) {
-      this._createNewList()
+      this._emptyList()
     } else {
       throw new Error('One Input Maximum')
     }
   }
   // Construction / Utility /////////////////////////////////////////
-  _createNewList() {
+  _emptyList() {
     this.head = null
     this.tail = null
     this.length = 0
   }
   _fillList(array) {
-    this.head = new Node(array[0], null)
+    this.head = new Node(array[0], null, null)
     this.tail = this.head
     this.length = 1
     if (array.length > 1) {
@@ -50,11 +50,11 @@ class LinkedList {
   _lastIndex() {
     return this.length > 0 ? this.length - 1 : null
   }
-  _xFromTail() {
+  _xFromTail(index) {
     return this._lastIndex() - index
   }
   _isCloserToHead(index) {
-    return index < this._xFromTail() ? true : false
+    return index < this._xFromTail(index) ? true : false
   }
   _checkIndex(index, checkLength = true) {
     if (isNaturalNumber(index)) {
@@ -66,17 +66,18 @@ class LinkedList {
     this._naturalIndexError()
   }
   _nodeAt(index) {
+    let node
     if (this._isCloserToHead(index)) {
-      let node = this.head
+      node = this.head
       let counter = 0
       while (counter < index) {
         node = node.next
         counter++
       }
     } else {
-      let node = this.tail
+      node = this.tail
       let counter = 0
-      while (counter < this._xFromTail()) {
+      while (counter < this._xFromTail(index)) {
         node = node.last
         counter++
       }
@@ -92,18 +93,33 @@ class LinkedList {
   }
   indexOf(value) {
     this._emptyListError()
-    let node = this.head
-    let counter = 0
     let indices = []
-    while (counter < this.length) {
-      node.value === value && indices.push(counter)
-      node = node.next
-      counter++
-    }
-    if (indices.length !== 0) {
-      return indices
-    }
-    this._valueNotFoundError()
+    const searchFirstHalf = new Promise((resolve) => {
+      let node = this.head
+      let counter = 0
+      while (this._isCloserToHead(counter)) {
+        node.value === value && indices.push(counter)
+        node = node.next
+        counter++
+      }
+      resolve()
+    })
+    const searchSecondHalf = new Promise((resolve) => {
+      let node = this.tail
+      let counter = this._lastIndex()
+      while (!this._isCloserToHead(counter)) {
+        node.value === value && indices.push(counter)
+        node = node.last
+        counter--
+      }
+      resolve()
+    })
+    Promise.all([searchFirstHalf, searchSecondHalf]).then((_) => {
+      if (indices.length !== 0) {
+        return indices
+      }
+      this._valueNotFoundError()
+    })
   }
   // Appending //////////////////////////////////////////////////////
   _append(value) {
@@ -127,8 +143,10 @@ class LinkedList {
   }
   // Prepending /////////////////////////////////////////////////////
   _prepend(value) {
-    const newNode = new Node(value, this.head)
-    if (this.length === 0) {
+    const newNode = new Node(value, this.head, null)
+    if (this.length > 0) {
+      this.head.last = newNode
+    } else {
       this.tail = newNode
     }
     this.head = newNode
@@ -146,8 +164,9 @@ class LinkedList {
   // Insertion //////////////////////////////////////////////////////
   _insert(index, value) {
     let node = this._nodeAt(index - 1)
-    const newNode = new Node(value, node.next)
-    node.next = newNode
+    const newNode = new Node(value, node.next, node)
+    newNode.next.last = newNode
+    newNode.last.next = newNode
     this.length++
   }
   insert(index, values) {
@@ -172,13 +191,13 @@ class LinkedList {
   // Removal ////////////////////////////////////////////////////////
   clear() {
     this._emptyListError()
-    this._createNewList()
+    this._emptyList()
   }
   _remove(index1, index2) {
     let difference = index2 - index1
     const newLength = this.length - difference
     if (newLength === 0) {
-      this._createNewList()
+      this._emptyList()
       return this
     }
     const node1 = this._nodeAt(index1 - 1)
@@ -187,9 +206,11 @@ class LinkedList {
       node1.next = null
       this.tail = node1
     } else if (index1 === 0) {
+      node2.last = null
       this.head = node2
     } else {
       node1.next = node2
+      node2.last = node1
     }
     this.length = newLength
     return this

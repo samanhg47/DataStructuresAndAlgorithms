@@ -1,6 +1,6 @@
-const { LinkedList, carla, carla2, list, arr } = require('./sll')
+const { LinkedList, carla, carla2, list, arr } = require('./dll')
 
-const header = 'SLL-IndexOf: '
+const header = 'DLL-IndexOf: '
 const indexOfTests = () =>
   describe('Returns Index Of Value', () => {
     const testList = new LinkedList()

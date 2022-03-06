@@ -1,6 +1,6 @@
-const { LinkedList, carla, carla2, obj, list } = require('./sll')
+const { LinkedList, carla, carla2, obj, list } = require('./dll')
 
-const header = 'SLL-Prepend: '
+const header = 'DLL-Prepend: '
 const prependingTests = () =>
   describe('Prepending', () => {
     // Throws Error If Not Given Array

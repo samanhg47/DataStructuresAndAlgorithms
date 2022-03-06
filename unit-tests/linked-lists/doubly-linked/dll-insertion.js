@@ -1,6 +1,6 @@
-const { LinkedList, carla, carla2, obj, list } = require('./sll')
+const { LinkedList, carla, carla2, obj, list } = require('./dll')
 
-const header = 'SLL-Insert: '
+const header = 'DLL-Insert: '
 const insertionTests = () =>
   describe('Insertion', () => {
     // Throws Error If Not Given Array

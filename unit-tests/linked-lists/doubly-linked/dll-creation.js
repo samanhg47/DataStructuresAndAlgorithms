@@ -1,6 +1,6 @@
-const { LinkedList, obj, arr, buildList } = require('./sll')
+const { LinkedList, obj, arr, buildList } = require('./dll')
 
-const header = 'SLL-Initialization: '
+const header = 'DLL-Initialization: '
 const creationTests = () =>
   describe('Initialization', () => {
     // Throws Creation Errors

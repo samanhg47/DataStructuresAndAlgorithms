@@ -11,18 +11,18 @@ const {
   sllConversionTests
 } = require('./singly-linked')
 
-// const {
-//   dllCreationTests,
-//   dllCheckIndex,
-//   dllAppendingTests,
-//   dllPrependingTests,
-//   dllInsertionTests,
-//   dllIndexOfTests,
-//   dllChangeValueTests,
-//   dllRemovalTests,
-//   dllValueRetrievalTests,
-//   dllConversionTests
-// } = require('./doubly-linked')
+const {
+  dllCreationTests,
+  dllCheckIndex,
+  dllAppendingTests,
+  dllPrependingTests,
+  dllInsertionTests,
+  dllIndexOfTests,
+  dllChangeValueTests,
+  dllRemovalTests,
+  dllValueRetrievalTests,
+  dllConversionTests
+} = require('./doubly-linked')
 
 describe('Singly Linked List Test', () => {
   sllCreationTests()
@@ -37,15 +37,15 @@ describe('Singly Linked List Test', () => {
   sllConversionTests()
 })
 
-// describe('Doubly Linked List Test', () => {
-//   dllCreationTests()
-//   dllCheckIndex()
-//   dllAppendingTests()
-//   dllPrependingTests()
-//   dllInsertionTests()
-//   dllIndexOfTests()
-//   dllChangeValueTests()
-//   dllRemovalTests()
-//   dllValueRetrievalTests()
-//   dllConversionTests()
-// })
+describe('Doubly Linked List Test', () => {
+  dllCreationTests()
+  dllValueRetrievalTests()
+  dllCheckIndex()
+  dllAppendingTests()
+  dllPrependingTests()
+  dllInsertionTests()
+  dllIndexOfTests()
+  dllChangeValueTests()
+  dllRemovalTests()
+  dllConversionTests()
+})

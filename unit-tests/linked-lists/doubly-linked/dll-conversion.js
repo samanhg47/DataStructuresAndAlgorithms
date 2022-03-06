@@ -1,6 +1,6 @@
-const { carla, carla2, list, arr, LinkedList } = require('./sll')
+const { carla, carla2, list, arr, LinkedList } = require('./dll')
 
-const header = 'SLL-Convert: '
+const header = 'DLL-Convert: '
 const conversionTests = () =>
   describe('Conversion', () => {
     //Converts List To Array

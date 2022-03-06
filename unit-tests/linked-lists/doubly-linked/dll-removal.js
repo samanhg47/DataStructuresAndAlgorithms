@@ -1,6 +1,6 @@
-const { LinkedList, carla, carla2, obj, list, arr } = require('./sll')
+const { LinkedList, carla, carla2, obj, list, arr } = require('./dll')
 
-const header = 'SLL-Remove: '
+const header = 'DLL-Remove: '
 const removalTests = () =>
   describe('Removal', () => {
     // Throws Error If Used On Empty List
