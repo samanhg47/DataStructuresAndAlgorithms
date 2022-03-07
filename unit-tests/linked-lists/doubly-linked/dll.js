@@ -93,33 +93,18 @@ class LinkedList {
   }
   indexOf(value) {
     this._emptyListError()
+    let node = this.head
+    let counter = 0
     let indices = []
-    const searchFirstHalf = new Promise((resolve) => {
-      let node = this.head
-      let counter = 0
-      while (this._isCloserToHead(counter)) {
-        node.value === value && indices.push(counter)
-        node = node.next
-        counter++
-      }
-      resolve()
-    })
-    const searchSecondHalf = new Promise((resolve) => {
-      let node = this.tail
-      let counter = this._lastIndex()
-      while (!this._isCloserToHead(counter)) {
-        node.value === value && indices.push(counter)
-        node = node.last
-        counter--
-      }
-      resolve()
-    })
-    Promise.all([searchFirstHalf, searchSecondHalf]).then((_) => {
-      if (indices.length !== 0) {
-        return indices
-      }
-      this._valueNotFoundError()
-    })
+    while (counter < this.length) {
+      node.value === value && indices.push(counter)
+      node = node.next
+      counter++
+    }
+    if (indices.length !== 0) {
+      return indices
+    }
+    this._valueNotFoundError()
   }
   // Appending //////////////////////////////////////////////////////
   _append(value) {

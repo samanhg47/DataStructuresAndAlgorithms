@@ -57,10 +57,11 @@ const appendingTests = () =>
     // Append Multiple Values To List
     test(header + 'Multiple Values To List', () => {
       const testList = new LinkedList([carla]).append(['4', 146, carla2])
+      const i2 = testList._nodeAt(2)
       expect(testList.valueAt(0)).toEqual(carla)
-      expect(testList.valueAt(1)).toEqual('4')
-      expect(testList.valueAt(2)).toEqual(146)
-      expect(testList.valueAt(3)).toEqual(carla2)
+      expect(i2.last.value).toEqual('4')
+      expect(i2.value).toEqual(146)
+      expect(i2.next.value).toEqual(carla2)
     })
   })
 

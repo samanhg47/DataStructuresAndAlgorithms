@@ -1,4 +1,4 @@
-const { LinkedList, obj, arr, buildList } = require('./dll')
+const { LinkedList, carla, carla2, arr, buildList } = require('./dll')
 
 const header = 'DLL-Initialization: '
 const creationTests = () =>
@@ -28,15 +28,20 @@ const creationTests = () =>
     test(header + 'Single Input', () => {
       const testList = new LinkedList(['4'])
       const testObj = {
-        head: { value: '4', next: null },
-        tail: { value: '4', next: null },
+        head: { value: '4', next: null, last: null },
+        tail: { value: '4', next: null, last: null },
         length: 1
       }
       expect(testList).toEqual(testObj)
     })
     test(header + 'Multiple Inputs As Array', () => {
       const testList = new LinkedList(arr)
-      expect(testList).toEqual(obj)
+      const i2 = testList._nodeAt(2)
+      expect(testList.length).toEqual(4)
+      expect(testList.valueAt(0)).toEqual(carla)
+      expect(i2.last.value).toEqual('4')
+      expect(i2.value).toEqual(146)
+      expect(i2.next.value).toEqual(carla2)
     })
   })
 

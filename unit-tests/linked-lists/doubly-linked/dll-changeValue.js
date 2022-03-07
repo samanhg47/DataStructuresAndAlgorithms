@@ -18,7 +18,7 @@ const changeValueTests = () =>
         { height: 4, width: 5 },
         carla2
       ]).changeValue(2, 146)
-      expect(testList).toEqual(obj)
+      expect(testList.indexOf(146)).toEqual([2])
     })
   })
 
