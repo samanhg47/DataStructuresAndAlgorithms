@@ -482,32 +482,43 @@ insertOne(index, value) {
 <h3 id='LLRemove'><b>LinkedList.remove(index)</b></h3>
 
 ```js
-remove(index) {
-  if (this._checkIndex(index, false)) {
-    if (index === 0) {
-      const newHead = this.head.next
-      this.head = newHead
-    } else {
-      let node
-      if (index >= this.length - 1) {
-        index = this.length - 1
-        node = this._nodeAt(index - 1)
-        const newNext = node.next.next
-        node.next = newNext
-        this.tail = node
-      } else {
-        node = this._nodeAt(index - 1)
-        const newNext = node.next.next
-        node.next = newNext
-      }
-    }
-    this.length--
+_remove(index1, index2) {
+  let difference = index2 - index1
+  const newLength = this.length - difference
+  if (newLength === 0) {
+    this._createNewList()
     return this
+  }
+  const node1 = this._nodeAt(index1 - 1)
+  const node2 = this._nodeAt(index2)
+  if (index1 === this._lastIndex() || index2 === this.length) {
+    node1.next = null
+    this.tail = node1
+  } else if (index1 === 0) {
+    this.head = node2
+  } else {
+    node1.next = node2
+  }
+  this.length = newLength
+  return this
+}
+remove(index1, index2 = index1 + 1) {
+  this._emptyListError()
+  if (this._checkIndex(index1, false)) {
+    if (this._checkIndex(index2, false)) {
+      if (index1 < index2) {
+        index1 > this._lastIndex() && (index1 = this._lastIndex())
+        index2 > this.length && (index2 = this.length)
+        this._remove(index1, index2)
+        return this
+      }
+      this._startSmallerError()
+    }
   }
 }
 ```
 
- To remove a node from our list, we call a function that intakes the index and which the node resides. We again check that the node is a natural number. Once the node is checked we can begin the process of removing the node.  if the index given is zero, we simply save the known that the head of our list points to as a variable. We then delete the head of our list. After that we assign the node that we saved to a variable as the new head of our linked list. If the index is greater than zero,  we simply create a variable called `node` and save the node before the given index to that variable. We then save  what the node at the given index points to to a variable called `newNext`. Finally, we make the node at our `node` variable point to our `newNext`. If the index given is pointing to the tail or greater, that simply adds a step to the beginning and end of our process. At the beginning of a process we now reassign our index to equal the length of our list minus one. At the end of our process we reassign the tail to equal our `node` variable.
+ To remove a node from our list, we call a function that intakes the index that the first node we want removed is stored and the index that the first node we don't wan't removed is stored. We again check that the indeces are natural numbers. Then we check that the first index given isn't Once the indeces are checked, we can begin the process of removing the node(s). If the index given is zero, we simply save the known that the head of our list points to as a variable. We then delete the head of our list. After that we assign the node that we saved to a variable as the new head of our linked list. If the index is greater than zero,  we simply create a variable called `node` and save the node before the given index to that variable. We then save  what the node at the given index points to to a variable called `newNext`. Finally, we make the node at our `node` variable point to our `newNext`. If the index given is pointing to the tail or greater, that simply adds a step to the beginning and end of our process. At the beginning of a process we now reassign our index to equal the length of our list minus one. At the end of our process we reassign the tail to equal our `node` variable.
 
 <h3 id='singlyLinked'><b>Singly Linked List</b></h3>
 
@@ -517,9 +528,9 @@ function isNaturalNumber(num) {
   const isNatural = num >= 0
   return isInteger && isNatural
 }
-class Node{
-	constructor(value, next){
-  	this.value = value
+class Node {
+  constructor(value, next) {
+    this.value = value
     this.next = next
   }
 }
@@ -541,6 +552,7 @@ class LinkedList {
       throw new Error('One Input Maximum')
     }
   }
+  // Construction / Utility /////////////////////////////////////////
   _createNewList() {
     this.head = null
     this.tail = null
@@ -553,28 +565,23 @@ class LinkedList {
     if (array.length > 1) {
       let index = 1
       while (index < array.length) {
-        this.appendOne(array[index])
+        this._append(array[index])
         index++
       }
     }
+  }
+  // Indices ////////////////////////////////////////////////////////
+  _lastIndex() {
+    return this.length > 0 ? this.length - 1 : null
   }
   _checkIndex(index, checkLength = true) {
     if (isNaturalNumber(index)) {
       if (!checkLength || index < this.length) {
         return true
       }
-      throw new Error('That Index Is Undefined')
+      this._undefindedIndexError(index)
     }
-    throw new Error('Index Must Be A Natural Number (This Includes 0)')
-  }
-  checkIndex(index, checkLength = true) {
-    if (isNaturalNumber(index)) {
-      if (!checkLength || index < this.length) {
-        return true
-      }
-      return false
-    }
-    return false
+    this._naturalIndexError()
   }
   _nodeAt(index) {
     let node = this.head
@@ -585,7 +592,30 @@ class LinkedList {
     }
     return node
   }
-  appendOne(value) {
+  valueAt(index) {
+    this._emptyListError()
+    if (this._checkIndex(index)) {
+      let node = this._nodeAt(index)
+      return node.value
+    }
+  }
+  indexOf(value) {
+    this._emptyListError()
+    let node = this.head
+    let counter = 0
+    let indices = []
+    while (counter < this.length) {
+      node.value === value && indices.push(counter)
+      node = node.next
+      counter++
+    }
+    if (indices.length !== 0) {
+      return indices
+    }
+    this._valueNotFoundError()
+  }
+  // Appending //////////////////////////////////////////////////////
+  _append(value) {
     const newNode = new Node(value, null)
     if (this.length > 0) {
       this.tail.next = newNode
@@ -594,138 +624,163 @@ class LinkedList {
     }
     this.tail = newNode
     this.length++
-    return this
   }
-  appendMany(values) {
-    for (let value of values) {
-      this.appendOne(value)
+  append(values) {
+    if (Array.isArray(values)) {
+      for (let value of values) {
+        this._append(value)
+      }
+      return this
     }
-    this.length += values.length
-    return this
+    this._valueAsArrayErr()
   }
-  prependOne(value) {
+  // Prepending /////////////////////////////////////////////////////
+  _prepend(value) {
     const newNode = new Node(value, this.head)
     if (this.length === 0) {
       this.tail = newNode
     }
     this.head = newNode
     this.length++
-    return this
   }
-  prependMany(values) {
-    for (let i = values.length - 1; i > -1; i--) {
-      this.prependOne(values[i])
-    }
-    this.length += values.length
-    return this
-  }
-  insertOne(index, value) {
-    if (this._checkIndex(index, false)) {
-      if (index === 0) {
-        return this.prependOne(value)
-      } else if (index < this.length) {
-        let node = this._nodeAt(index - 1)
-        const newNode = new Node(value, node.next)
-        node.next = newNode
-        this.length++
-        return this
+  prepend(values) {
+    if (Array.isArray(values)) {
+      for (let i = values.length - 1; i > -1; i--) {
+        this._prepend(values[i])
       }
-      return this.appendOne(value)
+      return this
     }
+    this._valueAsArrayErr()
   }
-  insertMany(index, values) {
+  // Insertion //////////////////////////////////////////////////////
+  _insert(index, value) {
+    let node = this._nodeAt(index - 1)
+    const newNode = new Node(value, node.next)
+    node.next = newNode
+    this.length++
+  }
+  insert(index, values) {
     if (Array.isArray(values)) {
       if (this._checkIndex(index, false)) {
         if (index === 0) {
-          this.prependMany(values)
-        } else if (index < this.length - 1) {
-          const node = this._nodeAt(index - 1)
-          values.push(node.next)
-          const nodeCluster = new LinkedList(values)
-          node.next = nodeCluster.head
-          this.length += values.length
+          this.prepend(values)
+        } else if (index < this.length) {
+          let currentIndex = index
+          for (const value of values) {
+            this._insert(currentIndex, value)
+            currentIndex++
+          }
         } else {
-          this.appendMany(values)
+          this.append(values)
         }
         return this
       }
-    } else {
-      throw new Error(
-        'Values must be in their desired order as elements in an array'
-      )
     }
+    this._valueAsArrayErr()
   }
-  remove(index) {
-    if (this._checkIndex(index, false)) {
-      if (index === 0) {
-        const newHead = this.head.next
-        delete this.head
-        this.head = newHead
-      } else {
-        index = index >= this.length ? this.length - 1 : index
-        let node = this._nodeAt(index - 1)
-        const newNext = node.next.next
-        delete node.next
-        node.next = newNext
-      }
-      this.length--
+  // Removal ////////////////////////////////////////////////////////
+  clear() {
+    this._emptyListError()
+    this._createNewList()
+  }
+  _remove(index1, index2) {
+    let difference = index2 - index1
+    const newLength = this.length - difference
+    if (newLength === 0) {
+      this._createNewList()
       return this
     }
+    const node1 = this._nodeAt(index1 - 1)
+    const node2 = this._nodeAt(index2)
+    if (index1 === this._lastIndex() || index2 === this.length) {
+      node1.next = null
+      this.tail = node1
+    } else if (index1 === 0) {
+      this.head = node2
+    } else {
+      node1.next = node2
+    }
+    this.length = newLength
+    return this
   }
+  remove(index1, index2 = index1 + 1) {
+    this._emptyListError()
+    if (this._checkIndex(index1, false)) {
+      if (this._checkIndex(index2, false)) {
+        if (index1 < index2) {
+          index1 > this._lastIndex() && (index1 = this._lastIndex())
+          index2 > this.length && (index2 = this.length)
+          this._remove(index1, index2)
+          return this
+        }
+        this._startSmallerError()
+      }
+    }
+  }
+  // Change Value ///////////////////////////////////////////////////
   changeValue(index, value) {
+    this._emptyListError()
     if (this._checkIndex(index)) {
       let node = this._nodeAt(index)
       node.value = value
       return this
     }
   }
-  valueAt(index) {
-    if (this._checkIndex(index)) {
-      let node = this._nodeAt(index)
-      return node.value
-    }
-  }
-  indexOf(value) {
-    let node = this.head
-    let counter = 0
-    let index
-    while (index === undefined || counter < this.length) {
-      node.value === value && (index = counter)
-      node = node.next
-      counter++
-    }
-    if (index !== undefined) {
-      return index
-    }
-    throw new Error('Value does not exist within list')
-  }
+  // Conversion /////////////////////////////////////////////////////
   asArray() {
     let node = this.head
-    let counter = 0
-    const arr = [node.value]
-    while (counter < this.length - 1) {
-      node = node.next
-      arr.push(node.value)
-      counter++
+    const array = []
+    if (node) {
+      let counter = 0
+      while (counter < this.length) {
+        array.push(node.value)
+        node = node.next
+        counter++
+      }
     }
-    return arr
+    return array
   }
   hashed() {
     let node = this.head
     let counter = 0
     const hash = new Map()
-    let value
-    while (counter < this.length) {
-      value = node.value
-      if (hash.get(value)) {
-        hash.set(value, hash.get(value) + 1)
-      } else {
-        hash.set(value, 1)
+    if (node) {
+      let value
+      while (counter < this.length) {
+        value = node.value
+        if (hash.get(value)) {
+          hash.set(value, hash.get(value) + 1)
+        } else {
+          hash.set(value, 1)
+        }
+        node = node.next
+        counter++
       }
-      node = node.next
-      counter++
     }
     return hash
+  }
+  // Errors /////////////////////////////////////////////////////////
+  _valueAsArrayErr() {
+    throw new Error(
+      'Values Must Be In Their Desired Order As Elements In An Array'
+    )
+  }
+  _undefindedIndexError(index) {
+    throw new Error(`Index ${index} Is Undefined`)
+  }
+  _naturalIndexError() {
+    throw new Error('Indices Must Be Natural Numbers (This Includes 0)')
+  }
+  _startSmallerError() {
+    throw new Error('Start Index Must Be Smaller Than Stop Index')
+  }
+  _valueNotFoundError() {
+    throw new Error('Value Does Not Exist Within List')
+  }
+  _emptyListError() {
+    if (!this.length) {
+      throw new Error("This Method Can't Be Used On An Empty List")
+    }
   }
 }
 ```
