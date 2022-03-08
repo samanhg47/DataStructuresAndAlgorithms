@@ -4,7 +4,7 @@ function isNaturalNumber(num) {
   return isInteger && isNatural
 }
 class Node {
-  constructor(value, next, last) {
+  constructor(value, next = null, last = null) {
     this.value = value
     this.next = next
     this.last = last
@@ -35,7 +35,7 @@ class LinkedList {
     this.length = 0
   }
   _fillList(array) {
-    this.head = new Node(array[0], null, null)
+    this.head = new Node(array[0])
     this.tail = this.head
     this.length = 1
     if (array.length > 1) {
@@ -128,7 +128,7 @@ class LinkedList {
   }
   // Prepending /////////////////////////////////////////////////////
   _prepend(value) {
-    const newNode = new Node(value, this.head, null)
+    const newNode = new Node(value, this.head)
     if (this.length > 0) {
       this.head.last = newNode
     } else {
